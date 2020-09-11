@@ -1,0 +1,42 @@
+<nb-card>
+    <nb-card-header>Edit Assessment Information</nb-card-header>
+    <nb-card-body>
+        <div style="width:600px; height:auto;">
+        <label>If you need changing Questions/List of students, Its easier to delete this test and create a new one.</label>
+        <input type=text nbInput fullWidth [(ngModel)]="testRecord.testName" placeholder="Test Name"><br><br>
+        <input type=text nbInput fullWidth [(ngModel)]="testRecord.testDescription" placeholder="Test Description"><br><br>
+        <textarea style="width:600px;" rows=5 [(ngModel)]="testRecord.testInstructions" placeholder="Test Instructions"></textarea> <br><br>
+        <input nbInput 
+                    [min]=min 
+                    [max]=max 
+                    name="startDateTime" 
+                    [owlDateTime]="dt1" 
+                    [owlDateTimeTrigger]="dt1" 
+                    [(ngModel)]=testRecord.startDateTime  
+                    placeholder="Start Time"
+                    style="margin:10px;">
+                    <owl-date-time #dt1></owl-date-time>
+
+                    <input nbInput 
+                    [min]=min2 
+                    [max]=max2  
+                    name=endDateTime 
+                    [owlDateTime]="dt2" 
+                    [owlDateTimeTrigger]="dt2"
+                    [(ngModel)]=testRecord.endDateTime  
+                    placeholder="End Time" 
+                    style="margin:10px;">
+                    <owl-date-time [startAt]=min2 #dt2></owl-date-time>  <br><br>
+
+                    <h6>Announce Assessment</h6>
+                      <nb-radio-group  name=canList  [(ngModel)]="testRecord.canList">
+                        <nb-radio value=true  >Show this Assessment to students</nb-radio>
+                        <nb-radio value=false >Keep this Assessment hidden for now</nb-radio>
+                      </nb-radio-group><br><br>
+                      <div style="float:right">
+                        <button nbButton status=primary (click)="onTestUpdate()">Update</button>&nbsp;&nbsp;
+                
+                    </div>
+    </div>
+    </nb-card-body>
+</nb-card>

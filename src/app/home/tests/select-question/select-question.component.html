@@ -1,0 +1,19 @@
+<nb-card size=medium>
+    <nb-card-header>
+        Choose Questions 
+        <div style='float:right;'>{{toSelect}} Questions Remaining</div>
+    </nb-card-header>
+    <nb-card-body>
+        <table style="width:600px; border-collapse: collapse;">
+            <tr *ngFor="let qn of loadedQuestions" >
+                <td style="height:40px; border: solid black 1px;">
+                    <input type="checkbox" style='margin: 10px;' name={{qn.questionId}} value={{qn.question}} (click)="onClickQn($event)"> 
+                </td>
+                <td style="height:40px; border: solid black 1px;">{{qn.question}}</td>
+            </tr>
+        </table>
+        <div style="width:100%; float: right;">
+            <button nbButton (click)=onCloseBtn()>Close</button>
+        </div>
+    </nb-card-body>
+</nb-card>

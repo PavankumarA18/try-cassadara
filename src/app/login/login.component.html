@@ -1,0 +1,61 @@
+<!--<div class="col-md-6 offset-md-3 mt-5">-->
+   <!-- <div class="alert alert-info">
+        Username: test<br />
+        Password: test
+    </div> -->
+    <nb-card>
+
+      <nb-card-header>
+        <nb-icon icon='log-in-outline' status='warning'></nb-icon> Login
+        </nb-card-header>
+      <nb-card-body>
+        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <div style="padding:20px;"> 
+                <input nbInput name="username" formControlName="username" type="text" placeholder="email" style="width:100%" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"> 
+                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                    <div *ngIf="f.username.errors.required">Username is required</div>
+                </div>
+              </div> 
+              <div style="padding:20px;"> 
+                <input nbInput name="password" formControlName="password" type="password" placeholder="password" style="width:100%" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                </div>
+             </div>
+              <div style="padding:20px;"> 
+                <button nbButton status="primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Submit
+                </button>
+                &nbsp; &nbsp;Not a user yet? <a routerLink="/register" skipLocationChange>Signup</a><br><br>
+                <a routerLink="/forgot" skipLocationChange>Forgot your password?</a>
+              </div>
+        </form>
+
+         <!--  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group" style="padding: 20px;">
+                    <label for="username">Username</label>
+                    <Input nbInput type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">Username is required</div>
+                    </div>
+                </div>
+                <div class="form-group" style="padding: 20px;">
+                    <label for="password">Password</label>
+                    <input nbInput type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Password is required</div>
+                    </div>
+                </div>
+                <div style="padding:20px;">
+                    <button nbButton [disabled]="loading">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Login
+                    </button>
+                </div>
+                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+            </form> --> 
+    </nb-card-body>
+    </nb-card>
+<!--</div>-->

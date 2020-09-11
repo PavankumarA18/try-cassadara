@@ -1,0 +1,65 @@
+<nb-card  status=basic>
+    <nb-card-header>Invite and Manage Students</nb-card-header>
+    <nb-card-body>
+        <div style="width:33%;height:250px;float:left;">
+            <nb-card size=tiny accent=info>
+                <nb-card-header>
+                    System
+                </nb-card-header>
+                <nb-card-body>
+                    <span *ngFor="let system of userSettings.eduSystem">
+                        <input type="checkbox" name={{system}} value={{system}} (click)="onClickSystems($event)"> {{system}}<br>
+                    </span>
+                   <!-- <br>
+                    Other<br>
+                    <input nbInput size=10 type="text" name="otherSys" [(ngModel)]="otherOpt">&nbsp; <button (click)="addSysOption()">Add</button>-->
+                </nb-card-body>
+            </nb-card>
+            </div>
+            <div style="width:33%;height:250px; float:left;  ">
+                <nb-card size=tiny accent=info>
+                    <nb-card-header>
+                        Class
+                    </nb-card-header>
+                    <nb-card-body>
+                        <span *ngFor="let cl of userSettings.grade">
+                            <input type="checkbox" name={{cl}} value={{cl}} (click)="onClickClass($event)"> {{cl}}<br>
+                        </span>
+                       <!-- <br>
+                    Other<br>
+                    <input nbInput type="text" size=10 name="otherCls" [(ngModel)]="otherClsOpt">&nbsp; <button (click)="addClsOption()">Add</button>-->
+                    </nb-card-body>
+                </nb-card>
+            </div>
+            <div style="width:33%;height:250px;float:left;">
+                <nb-card size=tiny accent=info>
+                    <nb-card-header>
+                        Subject
+                    </nb-card-header>
+                    <nb-card-body>
+                        <span *ngFor="let sub of userSettings.subject">
+                            <input type="checkbox" name={{sub}} value={{sub}} (click)="onClickSubjects($event)"> {{sub}}<br>
+                        </span>
+                        <!--<br>
+                    Other<br>
+                    <input nbInput type="text" name="otherSub" [(ngModel)]="otherSubOpt">&nbsp; <button (click)="addSubOption()">Add</button>-->
+                    </nb-card-body>
+                </nb-card>
+            </div><br>
+            <div style="width:100%;">
+                <div *ngIf="addError">{{addError}}</div><br>
+                <input nbInput style="margin:20px;" status=info name=disName placeholder="Display Name" [(ngModel)]=disName required>
+                <input nbInput style="margin:20px;" status=info name=email placeholder="Email" [(ngModel)]=email required>
+                <input nbInput style="margin:20px;" status=info name=mobile placeholder="Mobile" [(ngModel)]=mobile required>
+                <div style="float:right">
+                    <button nbButton status=primary (click)="addUser()">Add</button>&nbsp;&nbsp;
+                    
+                </div>
+            </div>
+            <div style="width:100%; float: right;">
+                <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomAction($event)"></ng2-smart-table>
+            </div>
+            <br>
+            
+    </nb-card-body>
+</nb-card>

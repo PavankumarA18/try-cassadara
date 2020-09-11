@@ -1,7 +1,34 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './_helpers/auth.guard'
+import { RegisterComponent } from './register/register.component';
+import { StudentsComponent } from './home/students/students.component';
+import { QuestionsComponent } from './home/questions/questions.component';
+import { ProgressComponent } from './home/progress/progress.component';
+import { SettingsComponent } from './settings/settings.component';
+import { TestsComponent } from './home/tests/tests.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', component: HomeComponent, canActivate: [AuthGuard], children:[
+    { path: '', redirectTo: 'students', pathMatch: "full"},
+    { path:'students', component: StudentsComponent  },
+    { path: 'questions', component: QuestionsComponent },
+    { path: 'tests', component: TestsComponent},
+    { path: 'progress', component: ProgressComponent}
+  ]},
+  { path: 'login', component: LoginComponent  },
+  { path: 'register', component: RegisterComponent },
+  { path: 'settings', component: SettingsComponent },
+  { path: 'forgot', component: ResetPasswordComponent },
+  { path: 'updatepwd/:email', component: UpdatePasswordComponent},
+
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

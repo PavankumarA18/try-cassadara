@@ -1,0 +1,49 @@
+
+    <nb-card status=basic>
+    <nb-card-body>
+        <div style="width:100%;height:auto;">
+        <nb-select style="margin:10px;" placeholder="System" status="info" [(ngModel)]="selectedSystem">
+            <nb-option value={{userSettings.eduSystem.indexOf(sys)}} *ngFor="let sys of userSettings.eduSystem">{{sys}}</nb-option>
+        </nb-select>
+        
+        
+        <nb-select style="margin:10px;" placeholder="Class" status="info" [(ngModel)]="selectedClass">
+            <nb-option value={{userSettings.grade.indexOf(cls)}} *ngFor="let cls of userSettings.grade">{{cls}}</nb-option>
+        </nb-select>
+        
+        
+        <nb-select style="margin:10px;" placeholder="Subject" status="info" [(ngModel)]="selectedSubject">
+            <nb-option value={{userSettings.subject.indexOf(sub)}} *ngFor="let sub of userSettings.subject">{{sub}}</nb-option>
+        </nb-select>
+       
+        
+        <button nbButton style="margin:10px;" status="primary" (click)=onViewQuestion()>
+            View Questions
+        </button>
+        </div>
+    </nb-card-body>
+</nb-card>
+<nb-card status="basic" accent='info'>
+    <nb-card-header>
+        Questions 
+        <div style="float: right;">
+            <button nbButton size=tiny status=primary [disabled]="isAdd()" (click)="onAddNew()">Add New</button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+      <!-- <table width=100%>
+            <tr>
+                <th width=20%>Chapter</th>
+                <th width=60%>Question</th>
+                <th>Action</th>
+            </tr>
+            <tr style="height: 50px;" *ngFor="let qn of questions">
+                <td>{{qn.chapter}}</td>
+                <td>{{qn.question}}</td>
+                <td><nb-icon icon='edit-outline' status=warning [options]="{ animation: { type: 'zoom' } }"></nb-icon> &nbsp; <nb-icon icon='trash-2-outline' status=danger [options]="{ animation: { type: 'zoom' } }"></nb-icon></td>
+            </tr>
+        </table>--> 
+        <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomAction($event)"></ng2-smart-table>
+
+    </nb-card-body>
+</nb-card>

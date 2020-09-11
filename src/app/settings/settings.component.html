@@ -1,0 +1,64 @@
+<nb-card>
+    <nb-card-header>
+     <nb-icon icon='settings-outline' status='warning' ></nb-icon>   Configure your need
+    </nb-card-header>
+    <nb-card-body>
+        <nb-card *ngIf="userSettings">
+            <nb-card-header>User Settings</nb-card-header>
+            <nb-card-body>
+                Systems: <label *ngFor="let sys of mySettings.system">{{sys}},&nbsp;</label><br>
+                Class: <label *ngFor="let cls of mySettings.class">{{cls}},&nbsp;</label><br>
+                Subjects: <label *ngFor="let sub of mySettings.subject">{{sub}},&nbsp;</label><br>
+            </nb-card-body>
+        </nb-card>
+        <div style="width:33%;height:400px;float:left;">
+        <nb-card size=small>
+            <nb-card-header>
+                System
+            </nb-card-header>
+            <nb-card-body>
+                <span *ngFor="let system of defaultSystems">
+                    <input type="checkbox" name={{system}} value={{system}} (click)="onClickSystems($event)"> {{system}}<br>
+                </span>
+                <br>
+                Other<br>
+                <input nbInput size=10 type="text" name="otherSys" [(ngModel)]="otherOpt">&nbsp; <button (click)="addSysOption()">Add</button>
+            </nb-card-body>
+        </nb-card>
+        </div>
+        <div style="width:33%;height:400px; float:left;  ">
+            <nb-card size=small>
+                <nb-card-header>
+                    Class
+                </nb-card-header>
+                <nb-card-body>
+                    <span *ngFor="let cl of defaultClass">
+                        <input type="checkbox" name={{cl}} value={{cl}} (click)="onClickClass($event)"> {{cl}}<br>
+                    </span>
+                    <br>
+                Other<br>
+                <input nbInput type="text" size=10 name="otherCls" [(ngModel)]="otherClsOpt">&nbsp; <button (click)="addClsOption()">Add</button>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div style="width:33%;height:400px;float:left;">
+            <nb-card size=small>
+                <nb-card-header>
+                    Subject
+                </nb-card-header>
+                <nb-card-body>
+                    <span *ngFor="let sub of defaultSubjects">
+                        <input type="checkbox" name={{sub}} value={{sub}} (click)="onClickSubjects($event)"> {{sub}}<br>
+                    </span>
+                    <br>
+                Other<br>
+                <input nbInput type="text" name="otherSub" [(ngModel)]="otherSubOpt">&nbsp; <button (click)="addSubOption()">Add</button>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div style="float:right">
+            <button nbButton status=primary (click)="saveUserSettings()">Save</button>&nbsp;&nbsp;
+            <button nbButton status=primary (click)="goBack()">Back</button>
+        </div>
+    </nb-card-body>
+</nb-card>

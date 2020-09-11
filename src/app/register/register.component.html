@@ -1,0 +1,53 @@
+<nb-card [nbSpinner]="loading">
+    <nb-card-header>
+        <nb-icon icon='person-add-outline' status='warning'></nb-icon>
+        Register
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div style="padding:20px;"> 
+                <input nbInput name="disname" formControlName="disname" type="text" placeholder="Display Name" style="width:100%" [ngClass]="{ 'is-invalid': submitted && f.disname.errors }"> 
+                <div *ngIf="submitted && f.disname.errors" class="invalid-feedback">
+                    <div *ngIf="f.disname.errors.required">Name is required</div>
+                </div>
+              </div> 
+              <div style="padding:20px;"> 
+                <input nbInput name="mobile" formControlName="mobile" type="tel" placeholder="mobile" pattern="[0-9]{5}[0-9]{5}" style="width:100%" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }">
+                <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+                    <div *ngIf="f.mobile.errors.required">Mobile is required</div>
+                    <div *ngIf="f.mobile.errors.pattern">Mobile should be a 10 digit number</div>
+                </div>
+             </div>
+            <div style="padding:20px;"> 
+                <input nbInput name="email" formControlName="email" type="text" placeholder="email" style="width:100%" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"> 
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email is required</div>
+                </div>
+              </div> 
+              <div style="padding:20px;"> 
+                <input nbInput name="password" formControlName="password" type="password" placeholder="password" style="width:100%" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.minlength">Password should be at least 6 characters long</div>
+                </div>
+             </div>
+             <div style="padding:20px;"> 
+                <input nbInput name="confirmpassword" formControlName="confirmpassword" type="password" placeholder="confirm password" style="width:100%" [ngClass]="{ 'is-invalid': submitted && f.confirmpassword.errors }">
+                <div *ngIf="submitted && f.confirmpassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmpassword.errors.required">Confirm Password is required</div>
+                    <div *ngIf="f.confirmpassword.errors.mustMatch">password and confirm password does not match</div>
+                </div>
+             </div>
+             <div style="padding:20px;"> 
+                <button nbButton status="primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Submit
+                </button> &nbsp;
+                <button nbButton status="primary" type="reset" (click)="onReset()">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    cancel
+                </button>
+              </div>
+        </form>
+    </nb-card-body>
+</nb-card>

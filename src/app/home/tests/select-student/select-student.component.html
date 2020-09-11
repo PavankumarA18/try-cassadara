@@ -1,0 +1,14 @@
+<nb-card size=medium>
+    <nb-card-body>
+        <table style="width:600px; border-collapse: collapse;">
+            <tr *ngFor="let stu of subStudents" >
+                <td style="height:40px; border: solid black 1px;">
+                    <input type="checkbox" style='margin: 10px;' name={{stu.userId}} value={{stu.displayName}} (click)="onClickStu($event)"> 
+                </td>
+                <td style="height:40px; border: solid black 1px;">{{stu.displayName}}</td>
+            </tr>
+        </table>
+        <div style="width:100%; float: right;">
+            <button nbButton (click)=onCloseBtn()>Close</button>
+        </div>    </nb-card-body>
+</nb-card>

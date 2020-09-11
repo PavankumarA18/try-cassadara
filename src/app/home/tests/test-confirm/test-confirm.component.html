@@ -1,0 +1,14 @@
+<nb-card>
+    <nb-card-header>{{title}}</nb-card-header>
+    <nb-card-body>
+        <h6>Are you sure?</h6>
+        <button nbButton  class="btn btn-primary" type="submit" (click)="onSubmit()">
+            
+            Ok
+        </button>&nbsp;&nbsp;
+        <button nbButton  class="btn btn-primary" type="submit" (click)="close(null)">
+            
+            Cancel
+        </button>
+    </nb-card-body>
+</nb-card>

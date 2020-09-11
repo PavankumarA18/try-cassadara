@@ -1,0 +1,11 @@
+:host ::ng-deep tr .ng2-smart-actions{ display: flex; }
+
+:host ::ng-deep nbng2-st-tbody-custom {display: flex;}
+
+:host ::ng-deep ng2-st-tbody-edit-delete a.ng2-smart-action {display: inline-block !important;}
+:host ::ng-deep ng2-st-tbody-create-cancel a.ng2-smart-action {display: inline-block !important;}
+:host ::ng-deep ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+}

@@ -1,0 +1,200 @@
+<nb-card [nbSpinner]=loading status=basic>
+    <nb-card-header>
+        Create Assesments
+    </nb-card-header>
+    <nb-card-body>
+        <nb-stepper #stepper [linear]=true>
+
+            <nb-step [stepControl]="nameForm" label="Assesment Info">
+              <form #nameForm="ngForm" class="step-container">
+                <div class="input-group">
+                  <input type="text" style="margin:10px;"
+                         placeholder="Enter Assesment name"
+                         class="form-control"
+                         name="testName"
+                         required
+                         nbInput
+                         [(ngModel)] = "newTest.testName"
+                         #name="ngModel"
+                         [status]="name.invalid ? 'danger' : 'basic'">
+                    <input type="text" fullWidth style="margin:10px;"
+                         placeholder="Enter Assesment Description"
+                         class="form-control"
+                         name="testDescription"
+                         required
+                         nbInput
+                         [(ngModel)] = "newTest.testDescription"
+                         #desc="ngModel"
+                         [status]="desc.invalid ? 'danger' : 'basic'"><br>
+                    <textarea fullWidth style="margin:10px; height:150px"
+                         placeholder="Provide instructions for Students"
+                         class="form-control"
+                         name="testInstructions"
+                         required
+                         nbInput
+                         [(ngModel)] = "newTest.testInstructions"
+                         #inst="ngModel"
+                         [status]="inst.invalid ? 'danger' : 'basic'"></textarea>
+                </div><br>
+                
+                <button nbButton nbStepperNext (click)=onNameForm()>next</button>
+              </form>
+            </nb-step>
+      
+            <nb-step [stepControl]="contentForm" label="Assessment Content">
+              <form #contentForm="ngForm" class="step-container">
+                <div *ngIf=error2>
+                  <span>{{error2msg}}</span>
+                </div>
+                  <div style="width:100%; height:auto;">
+                <div style="height:50px;float:left;margin:10px;">
+                    <nb-select placeholder="System" status="info" name="system" [(ngModel)]="selectedSystem">
+                        <nb-option value={{userSettings.eduSystem.indexOf(sys)}} *ngFor="let sys of userSettings.eduSystem">{{sys}}</nb-option>
+                    </nb-select>
+                    </div>
+                    <div style="height:50px;float:left;margin:10px;">
+                    <nb-select placeholder="Class" status="info" name="class" [(ngModel)]="selectedClass">
+                        <nb-option value={{userSettings.grade.indexOf(cls)}} *ngFor="let cls of userSettings.grade">{{cls}}</nb-option>
+                    </nb-select>
+                    </div>
+                    <div style="height:50px;float:left;margin:10px;">
+                    <nb-select placeholder="Subject" status="info" name="subject" [(ngModel)]="selectedSubject">
+                        <nb-option value={{userSettings.subject.indexOf(sub)}} *ngFor="let sub of userSettings.subject">{{sub}}</nb-option>
+                    </nb-select>
+                    </div>
+                    <div style="height:50px;float:left;margin:10px;">
+                    <button nbButton status="primary" (click)="onGo();">
+                        Go
+                    </button>
+                    </div>
+                   
+                </div> <br>
+                <div style="width:100%;float:left;">
+                <nb-list>
+                    <nb-list-item *ngFor="let chapter of uniqChapters">
+                        <input type="checkbox" name={{chapter}} value={{chapter}} (click)="onClickChapters($event)"> &nbsp; {{chapter}}
+                    </nb-list-item>
+                </nb-list>
+                </div>
+                
+                <br><br>
+                <div style="width:100%;float:left;">
+                    <button nbButton nbStepperNext [disabled]="error2 || error21" (click)=onContentForm()>next</button>
+                </div>
+              </form>
+            </nb-step>
+      
+            <nb-step [stepControl]="scheduleForm" label="Scheduler">
+              <form #scheduleForm="ngForm" class="step-container">
+                <div class="input-group">
+                  
+                    <nb-radio-group  name=testType  required [(ngModel)]="newTest.testType" #testType="ngModel" [status]="testType.invalid? 'danger': 'basic'">
+                      <nb-radio value="slip" >Slip Test (10 Questions)</nb-radio>
+                      <nb-radio value="short">short Test (30 Questions)</nb-radio>
+                      <nb-radio value="long" *ngIf="newTest.chapters.length >= 2">Long Test (60 Questions, Randomized)</nb-radio>
+                      <nb-radio value="unit" *ngIf="newTest.chapters.length >= 4">Long Test (180 Questions, Randomized)</nb-radio>
+                      <nb-radio value="final" *ngIf="newTest.chapters.length == uniqChapters.length">Final Test (All or 300 Random Questions whichever is lesser)</nb-radio>
+                    </nb-radio-group>
+                  
+                    <div style="width:100%;float:left;" *ngIf="newTest.testType === 'slip' || newTest.testType === 'short'">
+                      <h6>Choose Questions</h6>
+                      <nb-radio-group  name=randomQuestions  required [(ngModel)]="newTest.randomQuestions" #randomQuestions="ngModel" [status]="randomQuestions.invalid? 'danger': 'basic'">
+                        <nb-radio value=true  > Let system Choose questions (Random for students)</nb-radio>
+                        <nb-radio value=false >Let me choose the questions (Same set for all students)</nb-radio>
+                      </nb-radio-group>
+                      <button nbButton (click)=showQuestions() [disabled]=newTest.randomQuestions>Choose</button>
+                      </div>
+
+                    <input nbInput 
+                    [min]=min 
+                    [max]=max 
+                    name="startDateTime" 
+                    required 
+                    [owlDateTime]="dt1" 
+                    [owlDateTimeTrigger]="dt1" 
+                    [(ngModel)]=newTest.startDateTime  
+                    placeholder="Start Time"
+                    #startDateTime="ngModel" 
+                    [status]="startDateTime.invalid ? 'danger' : 'basic'"
+                    style="margin:10px;">
+                    <owl-date-time #dt1></owl-date-time>
+
+                    <input nbInput 
+                    [min]=min2 
+                    [max]=max2  
+                    name=endDateTime 
+                    required 
+                    [owlDateTime]="dt2" 
+                    [owlDateTimeTrigger]="dt2"
+                    [(ngModel)]=newTest.endDateTime  
+                    placeholder="End Time" 
+                    #endDateTime="ngModel" 
+                    [status]="endDateTime.invalid ? 'danger' : 'basic'" 
+                    style="margin:10px;">
+                    <owl-date-time [startAt]=min2 #dt2></owl-date-time>
+                    <br>
+                    
+                </div>
+                <button nbButton nbStepperNext>next</button>
+              </form>
+            </nb-step>
+            <nb-step [stepControl]="studentForm" label="Student Info">
+                <form #studentForm="ngForm" class="step-container">
+                  <div class="input-group">
+                    <div style="width:100%;float:left;">
+                      <h6>Announce Test</h6>
+                      <nb-radio-group  name=canList  required [(ngModel)]="newTest.canList" #canList="ngModel" [status]="canList.invalid? 'danger': 'basic'">
+                        <nb-radio value=true  >Show this test to students</nb-radio>
+                        <nb-radio value=false >Keep this test hidden for now</nb-radio>
+                      </nb-radio-group>
+                      <h6>Choose Students</h6>
+                      <nb-radio-group  name=allStudents  required [(ngModel)]="newTest.allStudents" #allStudents="ngModel" [status]="allStudents.invalid? 'danger': 'basic'">
+                        <nb-radio value=true  > All Students from the chosen system, class and subject</nb-radio>
+                        <nb-radio value=false >Let me choose the students</nb-radio>
+                      </nb-radio-group>
+                      <button nbButton (click)=showStudents() [disabled]=newTest.allStudents>Choose</button>
+                      </div>
+                  </div><br><br>
+                  <button nbButton nbStepperNext (click)=createTest()>next</button>
+                </form>
+              </nb-step>
+      
+            <nb-step [hidden]="true">
+              <div class="step-container">
+                <h3>Test Created Successfully!</h3>
+                <button nbButton (click)="stepper.reset()">Schedule More</button>
+              </div>
+            </nb-step>
+          </nb-stepper>
+    </nb-card-body>
+</nb-card>
+<nb-card accent='info' status=basic>
+  <nb-card-header>
+    Manage Assessments
+  </nb-card-header>
+  <nb-card-body>
+    <div style="width:100%; height:auto;">
+      <div style="height:50px;float:left;margin:10px;">
+          <nb-select placeholder="System" status="info" name="system" [(ngModel)]="selectedSystem1">
+              <nb-option value={{userSettings.eduSystem.indexOf(sys)}} *ngFor="let sys of userSettings.eduSystem">{{sys}}</nb-option>
+          </nb-select>
+          </div>
+          <div style="height:50px;float:left;margin:10px;">
+          <nb-select placeholder="Class" status="info" name="class" [(ngModel)]="selectedClass1">
+              <nb-option value={{userSettings.grade.indexOf(cls)}} *ngFor="let cls of userSettings.grade">{{cls}}</nb-option>
+          </nb-select>
+          </div>
+          <div style="height:50px;float:left;margin:10px;">
+          <nb-select placeholder="Subject" status="info" name="subject" [(ngModel)]="selectedSubject1">
+              <nb-option value={{userSettings.subject.indexOf(sub)}} *ngFor="let sub of userSettings.subject">{{sub}}</nb-option>
+          </nb-select>
+          </div>
+          <div style="height:50px;float:left;margin:10px;">
+            <button nbButton status="primary" (click)="onFindTests();">
+                Find Assessments
+            </button>
+            </div>
+            <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomAction($event)"></ng2-smart-table>
+    </div><br>
+  </nb-card-body>
+</nb-card>

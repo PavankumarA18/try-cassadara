@@ -1,0 +1,65 @@
+<nb-card [nbSpinner]="loading">
+    <nb-card-header>Edit Student Info</nb-card-header>
+    <nb-card-body>
+        <div style="width:650px; height:auto;">
+        <div style="width:200px;height:auto;float:left;">
+            <nb-card size=tiny>
+                <nb-card-header>
+                    System
+                </nb-card-header>
+                <nb-card-body>
+                    <span *ngFor="let system of userSettings.eduSystem">
+                        <input type="checkbox" name={{system.value}} value={{system.value}} (click)="onClickSystems($event)" [checked]=system.check> {{system.value}}<br>
+                    </span>
+                   <!-- <br>
+                    Other<br>
+                    <input nbInput size=10 type="text" name="otherSys" [(ngModel)]="otherOpt">&nbsp; <button (click)="addSysOption()">Add</button>-->
+                </nb-card-body>
+            </nb-card>
+        </div>
+             <div style="width:200px;height:auto;float:left;">
+                <nb-card size=tiny>
+                    <nb-card-header>
+                        Class
+                    </nb-card-header>
+                    <nb-card-body>
+                        <span *ngFor="let cl of userSettings.grade">
+                            <input type="checkbox" name={{cl.value}} value={{cl.value}} (click)="onClickClass($event)" [checked]=cl.check> {{cl.value}}<br>
+                        </span>
+                       <!-- <br>
+                    Other<br>
+                    <input nbInput type="text" size=10 name="otherCls" [(ngModel)]="otherClsOpt">&nbsp; <button (click)="addClsOption()">Add</button>-->
+                    </nb-card-body>
+                </nb-card>
+            </div>
+             <div style="width:250px;height:auto;float:left;">
+                <nb-card size=tiny>
+                    <nb-card-header>
+                        Subject
+                    </nb-card-header>
+                    <nb-card-body>
+                        <span *ngFor="let sub of userSettings.subject">
+                            <input type="checkbox" name={{sub.value}} value={{sub.value}} (click)="onClickSubjects($event)" [checked]=sub.check> {{sub.value}}<br>
+                        </span>
+                        <!--<br>
+                    Other<br>
+                    <input nbInput type="text" name="otherSub" [(ngModel)]="otherSubOpt">&nbsp; <button (click)="addSubOption()">Add</button>-->
+                    </nb-card-body>
+                </nb-card>
+            </div><br>
+            <div style="width:650px; height:auto;">
+                <nb-card>
+                    <nb-card-body>
+                        <input nbInput fullWidth status=info name=disName placeholder="Display Name" [(ngModel)]=submitStudent.displayName required><br><br>
+                        <input nbInput fullWidth status=info name=email placeholder="Email" [(ngModel)]=submitStudent.email disabled><br><br>
+                        <input nbInput fullWidth status=info name=mobile placeholder="Mobile" [(ngModel)]=submitStudent.mobile required><br><br>
+                        <div style="float:right">
+                            <button nbButton status=primary (click)="onUpdate()">Update</button>&nbsp;&nbsp;
+                    
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

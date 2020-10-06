@@ -130,6 +130,8 @@ export class QuestionsComponent implements OnInit {
             d: event.data.d,
             correct: event.data.correct,
             mark: event.data.mark,
+            hasImg:event.data.hasImg,
+            retImageUrl: event.data.image,
             isAddNew: false
 
           },

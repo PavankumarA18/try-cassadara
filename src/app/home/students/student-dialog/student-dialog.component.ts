@@ -87,12 +87,13 @@ myStuSettings: UserSetting;
   onUpdate(){
     this.loading=true;
     this.submitStudent['modTeacher']=this.authService.currentUserValue.email;
+    this.submitStudent['isNew']=false;
     console.log(JSON.stringify(this.submitStudent));
     this.userService.register(this.submitStudent).pipe(first()).subscribe(
       data=>{
         if(data.statusCode == 200){
           this.loading=false;
-          this.dialogRef.close();
+          this.dialogRef.close(this.submitStudent);
         }
       }
     )

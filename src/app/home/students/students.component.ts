@@ -124,6 +124,7 @@ export class StudentsComponent implements OnInit {
     stu['teacher']=new Array();
     stu['teacher'].push(this.authService.currentUserValue.email);
     stu['modTeacher']=this.authService.currentUserValue.email;
+    stu['isNew']=true;
     console.log(JSON.stringify(stu));
     this.userService.register(stu).pipe(first()).subscribe(
         data =>{
@@ -182,7 +183,14 @@ export class StudentsComponent implements OnInit {
             userSettings: JSON.parse(JSON.stringify(this.userSettings)),
             submitStudent: event.data
           }
-        });
+        }).onClose.subscribe(
+          data =>{
+            if(data){
+              this.student[this.student.findIndex(v => v.userId === data.userId)]=data;
+              this.source=new LocalDataSource(this.student);
+            }
+          }
+        )
         break;
         case 'deleteRec':
 

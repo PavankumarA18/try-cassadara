@@ -1,0 +1,23 @@
+<nb-card>
+    <nb-card-header>
+        Assessments
+    </nb-card-header>
+    <nb-card-body>
+        <nb-list>
+            <nb-list-item *ngFor="let test of tests">
+                <div style="width:50%;">
+                    <b>{{test.testName}}</b><br>
+                    <i style="font-size: 12px;">{{test.testDescription}}</i>
+                </div>
+                <div style="width:40%;">
+                    {{test.testType}} &nbsp;test<br>
+                    <i style="font-size: 12px;">{{test.startDateTime | date : 'short'}}</i>
+                </div>
+                <div style="width:10%" *ngIf="hasEnded(test)">
+                    <button nbButton><nb-icon icon=checkmark-circle-outline (click)=startTest(test)></nb-icon></button>
+                </div>
+                
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+</nb-card>

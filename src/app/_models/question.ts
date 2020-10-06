@@ -15,4 +15,6 @@ export class Question {
     correct: string;
     mark: number;
     created: Date;
+    hasImg:boolean;
+    image: string;
 }

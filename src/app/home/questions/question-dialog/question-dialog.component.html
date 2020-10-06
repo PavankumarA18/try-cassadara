@@ -9,11 +9,43 @@
               {{ option }}
             </nb-option>
         </nb-autocomplete><br><br>
-        <textarea style="width:100%;" rows=5 [(ngModel)]="question" placeholder="Question"></textarea><br><br>
+        <input type=checkbox [(ngModel)]=isMath>Is Math? &nbsp;
+        <input type=checkbox [(ngModel)]=hasImg>Has Image?  <br><br>  
+        <textarea style="width:100%;" rows=5 [(ngModel)]="question" placeholder="Question" (ngModelChange)="doSomething($event)"></textarea><br><br>
+        <div id="mathTextDiv" style="width:100%; height:100px; background:blanchedalmond;" [hidden]=!isMath>
+            <mathjax [content]='question' class="box"></mathjax>
+        </div><br><br>
+        <div id=imageDiv style="width:100%; height:80px;" [hidden]=!hasImg>
+            <div style="float:left;">
+                <input nbInput type="file" (change)="onFileChange($event)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </div>
+              
+              <div style="float:left;">
+              <button nbButton class="btn btn-success"(click)="fileSubmit()">Upload</button>
+              </div>
+              
+              
+        </div>
+        <div id=imageDiv style="width:100%; height:200px; align-content: center;" [hidden]=!hasImg>
+            <img style="float:left; width:200px; height:auto;" [src]=retImageUrl [hidden]=!hasImg>
+
+        </div><br><br>
         <input nbInput fullWidth type="text" [(ngModel)]="a" placeholder="Option A"><br><br>
+        <div id="mathTextDiva" style="width:100%; height:100px; background:blanchedalmond;" [hidden]=!isMath>
+            <mathjax [content]='a' class="box"></mathjax>
+        </div><br><br>
         <input nbInput fullWidth type="text" [(ngModel)]="b" placeholder="Option B"><br><br>
+        <div id="mathTextDivb" style="width:100%; height:100px; background:blanchedalmond;" [hidden]=!isMath>
+            <mathjax [content]='b' class="box"></mathjax>
+        </div><br><br>
         <input nbInput fullWidth type="text" [(ngModel)]="c" placeholder="Option C"><br><br>
+        <div id="mathTextDivc" style="width:100%; height:100px; background:blanchedalmond;" [hidden]=!isMath>
+            <mathjax [content]='c' class="box"></mathjax>
+        </div><br><br>
         <input nbInput fullWidth type="text" [(ngModel)]="d" placeholder="Option D"><br><br>
+        <div id="mathTextDivd" style="width:100%; height:100px; background:blanchedalmond;" [hidden]=!isMath>
+            <mathjax [content]='d' class="box"></mathjax>
+        </div><br><br>
         Choose the correct option<br>
         <nb-select fullWidth bindLabel="option" placeholder="Correct Answer" [(ngModel)]="selectedChoice">
             <nb-option value= "{{choices.indexOf(opt)}}" *ngFor="let opt of choices">{{opt}}</nb-option>

@@ -71,14 +71,23 @@ export class SettingsComponent implements OnInit {
   }
 
   addSysOption(){
+    if(this.otherOpt.trim() === ""){
+      return;
+    }
     this.defaultSystems.push(this.otherOpt);
     this.otherOpt="";
   }
   addClsOption(){
+    if(this.otherClsOpt.trim() === ""){
+      return;
+    }
     this.defaultClass.push(this.otherClsOpt);
     this.otherClsOpt="";
   }
   addSubOption(){
+    if(this.otherSubOpt.trim() === ""){
+      return;
+    }
     this.defaultSubjects.push(this.otherSubOpt);
     this.otherSubOpt="";
   }

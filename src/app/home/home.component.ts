@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
      responsive:true
    },
    {
-      title: 'Assesments',
+      title: 'Assessments',
       icon: 'compass-outline',
       route: '/tests',
       responsive:true
@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
  ];
 
  
+ 
   currentUser:User;
   constructor(
     private router: Router, 
@@ -45,6 +46,7 @@ export class HomeComponent implements OnInit {
     private sidebarService: NbSidebarService ) { }
 
   ngOnInit(): void {
+    
     this.currentUser = this.authenticationService.currentUserValue;
     if(!this.currentUser.userSettings){
       this.router.navigate(['settings'],{skipLocationChange: true});

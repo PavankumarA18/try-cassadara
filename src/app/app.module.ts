@@ -9,11 +9,13 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxChronometerModule } from 'ngx-chronometer';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { config } from 'rxjs';
+import {  RecaptchaModule } from 'ng-recaptcha';
 import { StudentsComponent } from './home/students/students.component';
 import { QuestionsComponent } from './home/questions/questions.component';
 import { ProgressComponent } from './home/progress/progress.component';
@@ -30,6 +32,11 @@ import { TestDialogComponent } from './home/tests/test-dialog/test-dialog.compon
 import { TestConfirmComponent } from './home/tests/test-confirm/test-confirm.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { MathjaxComponent } from './mathjax/mathjax.component';
+import { StudentHomeComponent } from './student-home/student-home.component';
+import { StudentAssessmentsComponent } from './student-home/student-assessments/student-assessments.component';
+import { StudentScoresComponent } from './student-home/student-scores/student-scores.component';
+import { RunTestComponent } from './student-home/student-assessments/run-test/run-test.component';
 
 
 
@@ -52,7 +59,12 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
     TestDialogComponent,
     TestConfirmComponent,
     ResetPasswordComponent,
-    UpdatePasswordComponent
+    UpdatePasswordComponent,
+    MathjaxComponent,
+    StudentHomeComponent,
+    StudentAssessmentsComponent,
+    StudentScoresComponent,
+    RunTestComponent
     
   ],
   imports: [
@@ -85,11 +97,15 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
     NbListModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    NbRadioModule         
+    NbRadioModule,
+    RecaptchaModule,
+    NgxChronometerModule
+          
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    
   ],
   bootstrap: [AppComponent]
 })

@@ -7,6 +7,7 @@ import { User } from '../_models/user';
 import { UserService } from '../_services/user.service'
 import { NbToastrService } from '@nebular/theme';
 
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -16,6 +17,7 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
+    cantSubmit = true;
     returnUrl: string;
     error = '';
     user: User;
@@ -24,7 +26,8 @@ export class RegisterComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private userService: UserService,
-        private toastrService: NbToastrService
+        private toastrService: NbToastrService,
+        
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +48,7 @@ export class RegisterComponent implements OnInit {
   get f() { return this.registerForm.controls; }
 
   onSubmit() {
+    
     this.submitted = true;
     console.log("form Invalid "+this.registerForm.invalid);
    
@@ -69,7 +73,7 @@ export class RegisterComponent implements OnInit {
               console.log(data);
               if(data.statusCode == 200){
                 this.toastrService.success("Registration Successful", "Registration Status");
-               // this.router.navigate([this.returnUrl]);
+                this.router.navigate([this.returnUrl]);
               }else {
                 this.toastrService.danger(data.message, "Registration Status");
                 this.loading=false;
@@ -84,5 +88,28 @@ export class RegisterComponent implements OnInit {
 onReset(){
   this.router.navigate(['/login'],{skipLocationChange: true});
 }
+
+resolved(captchaResponse: string) {
+  console.log(`Resolved captcha with response: ${captchaResponse}`);
+  var obj={};
+  obj['captchaResponse']=captchaResponse;
+  this.userService.validateCaptcha(obj).pipe(first()).subscribe(
+    data=>{
+      if(data.statusCode == 200) {
+        this.cantSubmit=false;
+      }else {
+        console.log(data.message);
+        
+      }
+    },
+    err=>{
+      console.log(err);
+    }
+  )
+  
+  
+}
+
+
 
 }

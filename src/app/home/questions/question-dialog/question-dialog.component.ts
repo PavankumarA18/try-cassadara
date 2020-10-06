@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, first } from 'rxjs/operators';
 import { Question } from 'src/app/_models/question';
 import { UserService } from 'src/app/_services/user.service';
 import { NbDialogRef } from '@nebular/theme';
@@ -18,6 +18,11 @@ export class QuestionDialogComponent implements OnInit {
   submitted=false;
   success:string;
   isAddNew= false;
+  isMath=false;
+  hasImg=false;
+  toFile: any;
+  retImageUrl: string;
+  mathText="";
   submitQuestion: Question;
   uniqChapters:string[];
   selectedEmail:string;
@@ -133,7 +138,14 @@ export class QuestionDialogComponent implements OnInit {
         this.loading=false;
         return;
       }
+      
       this.submitQuestion.mark = this.mark;
+      if(this.hasImg && this.retImageUrl){
+        this.submitQuestion.hasImg=this.hasImg;
+        this.submitQuestion.image=this.retImageUrl;
+      }else{
+        this.submitQuestion.hasImg=false;
+      }
       console.log(this.submitQuestion)
       this.userService.uploadQuestion(this.submitQuestion)
           .pipe().subscribe(
@@ -163,11 +175,41 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   close(){
-if(this.isAddNew){
-    this.dialogRef.close(this.addedQuestions);
-}else {
-  this.dialogRef.close(this.submitQuestion);
-}
+    if(this.isAddNew){
+        this.dialogRef.close(this.addedQuestions);
+    }else {
+      this.dialogRef.close(this.submitQuestion);
+    }
+  }
+
+  doSomething(event){
+  }
+
+  onFileChange(event) {
+    this.toFile = event.target.files;
+    console.log(this.toFile);
+
+  }
+
+  fileSubmit(){
+    this.loading=true;
+    const file = this.toFile.item(0);
+    const _this=this;
+    var prom=this.userService.fileUpload(file).subscribe(
+      data=>{
+        if(data.statusCode==200){
+          this.retImageUrl=data.body;
+          this.loading = false;
+        }else{
+          console.log(data);
+        }
+      },
+      err=>{
+        console.log(err);
+        this.loading=false;
+      }
+    )
+    
   }
 
 }

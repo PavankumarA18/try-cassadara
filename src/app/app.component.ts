@@ -10,7 +10,7 @@ export class AppComponent {
     currentUser: User;
     name: string;
     role: string;
-    userMenu=[{title:'Logout', icon:'log-out-outline'}];
+    userMenu=[{title:'Logout', icon:'log-out-outline'},{title:'Configure',icon:'settings-outline', hidden:true}];
       
     
     constructor(
@@ -23,12 +23,9 @@ export class AppComponent {
             this.currentUser=x;
             console.log('In App Component'+ JSON.stringify(x));
             if(x && x.role === 'teacher'){
-              console.log('role '+x.role);
-              
-              if(this.userMenu.filter(menu =>(menu.title==='configure')).length==0){
-                this.userMenu.push({title:'Configure',icon:'settings-outline'});
-              }
+              this.userMenu[1].hidden=false;
             }
+            
           });
         this.menuService.onItemClick().subscribe((event) => {
           this.onContecxtItemSelection(event.item.title);

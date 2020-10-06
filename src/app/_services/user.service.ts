@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Question } from '../_models/question';
 import {Message } from '../_models/message';
+import {ApiResponse } from '../_models/response';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 import { Test } from '../_models/Test';
@@ -16,6 +17,9 @@ export class UserService {
   /*getAll() {
     return this.http.get<User[]>(`${environment.apiUrl}/users`,{headers:{Authorization: 'Bearer fake-jwt-token'}});
   }*/
+  validateCaptcha(captchaRes: any){
+    return this.http.post<Message>('https://c4o2i0o2h5.execute-api.us-east-2.amazonaws.com/stage1', captchaRes);
+  }
 
   uploadQuestion(question: Question) {
     return this.http.post<Message>('https://pyixijys0b.execute-api.us-east-2.amazonaws.com/stage1',question);
@@ -68,5 +72,13 @@ export class UserService {
 
   updatePwd(pwd: any){
     return this.http.post<Message>('https://u9933bn99c.execute-api.us-east-2.amazonaws.com/stage1', pwd);
+  }
+
+  getHistory(email: any){
+    return this.http.post<Message>('https://ff2jhdthif.execute-api.us-east-2.amazonaws.com/stage1', email);
+  }
+
+  fileUpload(file: any){
+    return this.http.post<ApiResponse>('https://6e05zeqtnj.execute-api.us-east-2.amazonaws.com/upload', file);
   }
 }

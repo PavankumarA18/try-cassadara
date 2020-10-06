@@ -1,0 +1,39 @@
+<nb-card class=dialog> 
+    <nb-card-header>
+        Assessment 
+    </nb-card-header>
+    <nb-card-body>
+        <div style="width:400px; height:400px;" *ngIf=isStart>
+            Instructions from your teacher
+            <hr>
+            <p>{{test.testInstructions}}</p>
+        </div>
+        <br *ngIf=isStart>
+            <button nbButton style="float:right" (click)=startRun() *ngIf=isStart>Start</button>
+        <div style="width:100%; height:650px;" *ngIf=!isStart>
+        <b [chronometer]=chronometer [format]=format></b><br>
+            <hr>
+            <div id="mathTextDiv" style="width:400px; height:100px;">
+                <mathjax [content]='curQn.question' class="box"></mathjax>
+            </div><br><br>
+            <div id=imageDiv style="width:400px; height:400px; align-content: center;" [hidden]=!curQn.hasImg>
+                <img style="float:left; width:400px; height:auto;" [src]="curQn.image" [hidden]=!curQn.hasImg>
+    
+            </div><br [hidden]=!curQn.hasImg><br [hidden]=!curQn.hasImg>
+            <div id="mathTextDiva" style="width:100%; height:auto;">
+               <nb-radio-group>
+                <nb-radio #radA value=a><mathjax [content]='curQn.a' class="box"></mathjax></nb-radio>
+                <nb-radio #radB value=b><mathjax [content]='curQn.b' class="box"></mathjax></nb-radio>
+                <nb-radio #radC value=c><mathjax [content]='curQn.c' class="box"></mathjax></nb-radio>
+                <nb-radio #radD value=d><mathjax [content]='curQn.d' class="box"></mathjax></nb-radio>
+                
+                </nb-radio-group>
+
+            </div><br><br>
+            <button nbButton [disabled]="loading" class="btn btn-primary" (click)="onDone()">
+            
+                Done
+            </button>
+        </div>
+    </nb-card-body>
+</nb-card>

@@ -4,11 +4,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '../_services/authentication.service';
+import { UserService } from '../_services/user.service';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
+    cantSubmit=true;
     submitted = false;
     returnUrl: string;
     error = '';
@@ -18,10 +20,14 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
+        private userService: UserService
     ) { 
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) { 
+        if (this.authenticationService.currentUserValue && this.authenticationService.currentUserValue.role==='teacher') { 
+            
             this.router.navigate(['/']);
+        }else if(this.authenticationService.currentUserValue && this.authenticationService.currentUserValue.role==='student'){
+            this.router.navigate(['/student-home'])
         }
     }
 
@@ -56,7 +62,12 @@ export class LoginComponent implements OnInit {
                         if(user.firstLogin){
                             this.router.navigate(['/updatepwd/'+user.email],{skipLocationChange:true});
                         }else {
-                            this.router.navigate([this.returnUrl]);
+                            if(user.role === 'teacher'){
+                                this.router.navigate([this.returnUrl]);
+                            }else if(user.role === 'student'){
+                                this.router.navigate(['/student-home']);
+                            }
+                            
                         }
                     }else {
                         this.error = data.message;
@@ -69,4 +80,25 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                 });
     }
+
+    resolved(captchaResponse: string) {
+        console.log(`Resolved captcha with response: ${captchaResponse}`);
+        var obj={};
+        obj['captchaResponse']=captchaResponse;
+        this.userService.validateCaptcha(obj).pipe(first()).subscribe(
+          data=>{
+            if(data.statusCode == 200) {
+              this.cantSubmit=false;
+            }else {
+              console.log(data.message);
+              
+            }
+          },
+          err=>{
+            console.log(err);
+          }
+        )
+        
+        
+      }
 }

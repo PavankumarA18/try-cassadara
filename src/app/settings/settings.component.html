@@ -6,8 +6,8 @@
         <nb-card *ngIf="userSettings">
             <nb-card-header>User Settings</nb-card-header>
             <nb-card-body>
-                Systems: <label *ngFor="let sys of mySettings.system">{{sys}},&nbsp;</label><br>
-                Class: <label *ngFor="let cls of mySettings.class">{{cls}},&nbsp;</label><br>
+                Systems: <label *ngFor="let sys of mySettings.eduSystem">{{sys}},&nbsp;</label><br>
+                Class: <label *ngFor="let cls of mySettings.grade">{{cls}},&nbsp;</label><br>
                 Subjects: <label *ngFor="let sub of mySettings.subject">{{sub}},&nbsp;</label><br>
             </nb-card-body>
         </nb-card>

@@ -39,8 +39,12 @@
                 </div>
              </div>
              <div style="padding:20px;"> 
-                <button nbButton status="primary">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                <re-captcha (resolved)="resolved($event)" siteKey="6Lftbc4ZAAAAAJE-IIYPY_-__cH6JyaMe6G8PwmK"></re-captcha>
+             </div>
+             
+             <div style="padding:20px;"> 
+                <button nbButton status="primary" [disabled]=cantSubmit>
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1" ></span>
                     Submit
                 </button> &nbsp;
                 <button nbButton status="primary" type="reset" (click)="onReset()">

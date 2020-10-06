@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 import { User } from '../_models/user';
 import { Message } from '../_models/message'
 
+
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
@@ -46,4 +47,6 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
+
+    
 }

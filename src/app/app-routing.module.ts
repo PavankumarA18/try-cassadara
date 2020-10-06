@@ -11,6 +11,9 @@ import { SettingsComponent } from './settings/settings.component';
 import { TestsComponent } from './home/tests/tests.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { StudentHomeComponent } from './student-home/student-home.component';
+import { StudentAssessmentsComponent } from './student-home/student-assessments/student-assessments.component';
+import { StudentScoresComponent } from './student-home/student-scores/student-scores.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], children:[
@@ -19,6 +22,11 @@ const routes: Routes = [
     { path: 'questions', component: QuestionsComponent },
     { path: 'tests', component: TestsComponent},
     { path: 'progress', component: ProgressComponent}
+  ]},
+  { path: 'student-home', component: StudentHomeComponent, children:[
+    { path: '', redirectTo: 'studentAssessments', pathMatch:"full"},
+    { path: 'studentAssessments', component: StudentAssessmentsComponent },
+    { path: 'studentScores', component: StudentScoresComponent}
   ]},
   { path: 'login', component: LoginComponent  },
   { path: 'register', component: RegisterComponent },

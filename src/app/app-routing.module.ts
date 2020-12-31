@@ -14,6 +14,7 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
 import { StudentHomeComponent } from './student-home/student-home.component';
 import { StudentAssessmentsComponent } from './student-home/student-assessments/student-assessments.component';
 import { StudentScoresComponent } from './student-home/student-scores/student-scores.component';
+import { MarketPlaceComponent } from './market-place/market-place.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], children:[
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'forgot', component: ResetPasswordComponent },
   { path: 'updatepwd/:email', component: UpdatePasswordComponent},
+  { path: 'marketPlace', component: MarketPlaceComponent},
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

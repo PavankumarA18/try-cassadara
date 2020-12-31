@@ -37,6 +37,8 @@ import { StudentHomeComponent } from './student-home/student-home.component';
 import { StudentAssessmentsComponent } from './student-home/student-assessments/student-assessments.component';
 import { StudentScoresComponent } from './student-home/student-scores/student-scores.component';
 import { RunTestComponent } from './student-home/student-assessments/run-test/run-test.component';
+import { MarketPlaceComponent } from './market-place/market-place.component';
+import { SampleComponent } from './sample/sample.component';
 
 
 
@@ -64,7 +66,9 @@ import { RunTestComponent } from './student-home/student-assessments/run-test/ru
     StudentHomeComponent,
     StudentAssessmentsComponent,
     StudentScoresComponent,
-    RunTestComponent
+    RunTestComponent,
+    MarketPlaceComponent,
+    SampleComponent
     
   ],
   imports: [

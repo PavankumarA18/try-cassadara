@@ -1,0 +1,55 @@
+<nb-card>
+    <nb-card-header>
+     <nb-icon icon='shopping-cart-outline' status='warning' ></nb-icon>  Questions Market Place
+    </nb-card-header>
+    <nb-card-body>
+
+        <nb-card status=basic>
+            <nb-card-body>
+                <div style="width:100%;height:auto;">
+                <nb-select style="margin:10px;" placeholder="System" status="info" [(ngModel)]="selectedSystem">
+                    <nb-option value={{userSettings.eduSystem.indexOf(sys)}} *ngFor="let sys of userSettings.eduSystem">{{sys}}</nb-option>
+                </nb-select>
+                
+                
+                <nb-select style="margin:10px;" placeholder="Class" status="info" [(ngModel)]="selectedClass">
+                    <nb-option value={{userSettings.grade.indexOf(cls)}} *ngFor="let cls of userSettings.grade">{{cls}}</nb-option>
+                </nb-select>
+                
+                
+                <nb-select style="margin:10px;" placeholder="Subject" status="info" [(ngModel)]="selectedSubject">
+                    <nb-option value={{userSettings.subject.indexOf(sub)}} *ngFor="let sub of userSettings.subject">{{sub}}</nb-option>
+                </nb-select>
+               
+                
+                <button nbButton style="margin:10px;" status="primary" (click)=getProducts()>
+                    Find Products
+                </button>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card >
+            <nb-card-body>
+                <nb-list>
+                    <nb-list-item *ngFor="let prod of products">
+                        <div style="width: 100%; height: 140px;">
+                            <div style="margin: 5px; width:80px; height:100%; background-image: url({{prod.productImg}}); background-size: contain; float: left;">
+                            </div>
+                            <div style="margin: 5px; width:50%; height: 100%; float: left;">
+                                <span style="font-size: 26px; font-weight: bold;">{{prod.productTitle}}</span><br><br>
+                                <span style="font-size: 18px;">{{prod.productDesc}}</span><br><br>
+                                <span style="font-size: 20px; font-weight: bold;">&#x20B9; {{prod.billingPrice}}</span>
+ 
+                            </div>
+                            <div style="margin: 5px; width:30%; height: 100%; float:left;">
+                                <button nbButton status=warning>Buy Now </button><br><br>
+                                <span style="font-size: 14px; font-weight: bold;">Author: {{prod.authorName}}</span><br>
+                                {{prod.authorDetail}}
+                            </div>
+                        </div>
+                    </nb-list-item>
+                </nb-list>
+            </nb-card-body>
+        </nb-card>
+    </nb-card-body>
+</nb-card>

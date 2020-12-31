@@ -81,4 +81,8 @@ export class UserService {
   fileUpload(file: any){
     return this.http.post<ApiResponse>('https://6e05zeqtnj.execute-api.us-east-2.amazonaws.com/upload', file);
   }
+
+  getProducts(sys: any){
+    return this.http.post<Message>('https://p3wy4gu820.execute-api.us-east-2.amazonaws.com/stage1', sys);
+  }
 }

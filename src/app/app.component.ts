@@ -10,7 +10,11 @@ export class AppComponent {
     currentUser: User;
     name: string;
     role: string;
-    userMenu=[{title:'Logout', icon:'log-out-outline'},{title:'Configure',icon:'settings-outline', hidden:true}];
+    userMenu=[
+      {title:'Logout', icon:'log-out-outline'},
+      {title:'Configure',icon:'settings-outline', hidden:true},
+      {title:'Question Market',icon:'shopping-cart-outline', hidden:true}
+    ];
       
     
     constructor(
@@ -24,6 +28,7 @@ export class AppComponent {
             console.log('In App Component'+ JSON.stringify(x));
             if(x && x.role === 'teacher'){
               this.userMenu[1].hidden=false;
+              this.userMenu[2].hidden=false;
             }
             
           });
@@ -37,6 +42,8 @@ export class AppComponent {
       this.logout();
     } else if(title ==='Configure'){
       this.router.navigate(['/settings'],{skipLocationChange: true});
+    }else if(title=== 'Question Market'){
+      this.router.navigate(['/marketPlace'],{skipLocationChange: true});
     }
   }
 

@@ -118,6 +118,15 @@ export class SettingsComponent implements OnInit {
 
   saveUserSettings(){
     console.log('saving user settings');
+    //check if the user adds anything new before submitting 'save' button
+
+   
+
+    if (this.selectedSystems.toString()== "" && this.selectedClass.toString()=="" && this.selectedSubjects.toString()=="")
+    {
+      this.toastrService.danger("Please add System, Class or Subjects", "UserSettings");
+      return;
+    }
     
     if(this.authenticationService.currentUserValue.userSettings){
       console.log('inside if');

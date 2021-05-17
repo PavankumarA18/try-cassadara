@@ -26,23 +26,27 @@
                     Find Products
                 </button>
                 </div>
+                <div> <a routerLink="/policyPage"  rel="noopener noreferrer" target="_new" class ='a-link-normal a-nowrap'  >Policy</a></div>
             </nb-card-body>
         </nb-card>
         <nb-card >
             <nb-card-body>
                 <nb-list>
                     <nb-list-item *ngFor="let prod of products">
-                        <div style="width: 100%; height: 140px;">
-                            <div style="margin: 5px; width:80px; height:100%; background-image: url({{prod.productImg}}); background-size: contain; float: left;">
+                        <div style="width: 100%; height: 160px;">
+                            <div style="margin: 5px; width:80px; height:100%; background-size: contain; float: left;">
+                                <img style="float:left; width:auto; height:100px;" [src]=prod.productImg ><br>
                             </div>
+
                             <div style="margin: 5px; width:50%; height: 100%; float: left;">
                                 <span style="font-size: 26px; font-weight: bold;">{{prod.productTitle}}</span><br><br>
                                 <span style="font-size: 18px;">{{prod.productDesc}}</span><br><br>
-                                <span style="font-size: 20px; font-weight: bold;">&#x20B9; {{prod.billingPrice}}</span>
+                                <span style="font-size: 20px; font-weight: bold;">&#x20B9; {{prod.listingPrice}}</span>
  
                             </div>
+                                            
                             <div style="margin: 5px; width:30%; height: 100%; float:left;">
-                                <button nbButton status=warning>Buy Now </button><br><br>
+                                <button nbButton status=warning (click)=buyNow(prod.productId)  >Buy Now </button><br><br>
                                 <span style="font-size: 14px; font-weight: bold;">Author: {{prod.authorName}}</span><br>
                                 {{prod.authorDetail}}
                             </div>
@@ -53,3 +57,13 @@
         </nb-card>
     </nb-card-body>
 </nb-card>
+<form #form ngNoForm
+id="nonseamless" 
+method="post" 
+name="redirect" 
+action="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction">
+  <input type="hidden" id="encRequest" name="encRequest" value="{{encRequestRes}}">
+  <input type="hidden" name="access_code" id="access_code" value="{{accessCode}}">
+</form>
+
+

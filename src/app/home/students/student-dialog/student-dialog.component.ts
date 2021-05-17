@@ -15,8 +15,10 @@ export class StudentDialogComponent implements OnInit {
 loading=false;
 userSettings:any;
 submitStudent: User;
+addError: string;
 stuSettings: UserSetting[];
 myStuSettings: UserSetting;
+
   constructor(
     private authService: AuthenticationService,
     private userService: UserService,
@@ -24,6 +26,7 @@ myStuSettings: UserSetting;
   ) { }
 
   ngOnInit(): void {
+    this.addError="";
     this.stuSettings=this.submitStudent.userSettings;
     this.myStuSettings = this.stuSettings.find(x => x.teacher === this.authService.currentUserValue.email);
     console.log(this.myStuSettings);
@@ -85,6 +88,31 @@ myStuSettings: UserSetting;
   }
 
   onUpdate(){
+
+
+    //newly added for validation 14-05-2021
+
+    if(this.myStuSettings.grade.length==0 || this.myStuSettings.eduSystem.length==0 || this.myStuSettings.subject.length==0){
+      this.addError="Please select systems, classes and subjects for students";
+      return;
+    }
+    if(this.submitStudent.email == "" || this.submitStudent.displayName =="" || this.submitStudent.mobile == ""){
+      this.addError="Display Name, email and mobile fields are required";
+      return;
+    }
+
+    var mobileNumberFormat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if(!this.submitStudent.mobile.match(mobileNumberFormat))
+    {
+     
+      this.addError="mobile number format doesn't match";
+      return;
+    }
+
+
+
+
+    //---------------------
     this.loading=true;
     this.submitStudent['modTeacher']=this.authService.currentUserValue.email;
     this.submitStudent['isNew']=false;

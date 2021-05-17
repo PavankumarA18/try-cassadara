@@ -13,10 +13,10 @@ export class AppComponent {
     userMenu=[
       {title:'Logout', icon:'log-out-outline'},
       {title:'Configure',icon:'settings-outline', hidden:true},
-      {title:'Question Market',icon:'shopping-cart-outline', hidden:true}
+      {title:'Publish to Market Place',icon:'cloud-upload-outline', hidden:true},
+      {title:'Question Market',icon:'shopping-cart-outline', hidden:true} 
     ];
-      
-    
+          
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
@@ -29,6 +29,8 @@ export class AppComponent {
             if(x && x.role === 'teacher'){
               this.userMenu[1].hidden=false;
               this.userMenu[2].hidden=false;
+              this.userMenu[3].hidden=false;
+ 
             }
             
           });
@@ -40,18 +42,18 @@ export class AppComponent {
   onContecxtItemSelection(title) {
     if(title==='Logout'){
       this.logout();
-    } else if(title ==='Configure'){
+    } 
+    else if(title ==='Configure'){
       this.router.navigate(['/settings'],{skipLocationChange: true});
-    }else if(title=== 'Question Market'){
+      }
+      else if(title=== 'Question Market'){
       this.router.navigate(['/marketPlace'],{skipLocationChange: true});
     }
-  }
-
-        
-    
-
+    else if(title ==='Publish to Market Place'){
       
-    
+      this.router.navigate(['/publishmarketplace'],{skipLocationChange: true});
+    }
+  }
 
     logout() {
         this.authenticationService.logout();

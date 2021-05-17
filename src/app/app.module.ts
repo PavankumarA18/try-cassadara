@@ -39,6 +39,12 @@ import { StudentScoresComponent } from './student-home/student-scores/student-sc
 import { RunTestComponent } from './student-home/student-assessments/run-test/run-test.component';
 import { MarketPlaceComponent } from './market-place/market-place.component';
 import { SampleComponent } from './sample/sample.component';
+import { PublishMarketPlaceComponent } from './publish-market-place/publish-market-place.component';
+import { PublishmarketconfirmComponent } from './publish-market-place/publishmarketconfirm/publishmarketconfirm.component';
+import { PolicyPageComponent } from './market-place/policy-page/policy-page.component';
+import { CcAvenueRedirectComponent } from './market-place/cc-avenue-redirect/cc-avenue-redirect.component';
+import { BuyProductConfirmComponent } from './market-place/buy-product-confirm/buy-product-confirm.component';
+
 
 
 
@@ -68,7 +74,13 @@ import { SampleComponent } from './sample/sample.component';
     StudentScoresComponent,
     RunTestComponent,
     MarketPlaceComponent,
-    SampleComponent
+    SampleComponent,
+    PublishMarketPlaceComponent,
+    PublishmarketconfirmComponent,
+    PolicyPageComponent,
+    CcAvenueRedirectComponent,
+    BuyProductConfirmComponent
+    
     
   ],
   imports: [

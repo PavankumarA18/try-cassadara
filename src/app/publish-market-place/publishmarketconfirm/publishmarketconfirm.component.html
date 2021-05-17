@@ -1,0 +1,22 @@
+<nb-card>
+    <nb-card-header>Edit Product Information</nb-card-header>
+    <nb-card-body>
+        <div style="width:600px; height:auto;">
+        <label for="productTitleLabel" >Product Title</label>
+        <input type=text nbInput fullWidth [(ngModel)]="productRecord.productTitle" placeholder="Product Title" required><br><br>
+        <label for="productDescriptionLabel" >Product Description</label>
+        <textarea style="width:600px;" rows=5 [(ngModel)]="productRecord.productDesc" placeholder="Product Description" required></textarea> <br><br>
+        <label for="authorDescriptionLabel" >Author Name</label>
+        <input type=text nbInput fullWidth [(ngModel)]="productRecord.authorName" placeholder="Author Name" required><br><br>
+        <label for="authorDetailLabel" >Author Detail</label>
+        <textarea style="width:600px;" rows=5 [(ngModel)]="productRecord.authorDetail" placeholder="Author Detail" required></textarea> <br><br>
+        <label for="canPublishLabel">Can Publish?</label>
+        <input [checked]="canPublishRecord" type="checkbox" style='margin: 20px;' name="Can publish" value={{productRecord.canPublish}} (click)="onClickPublish($event)">
+                  <br><br>
+                      <div style="float:right">
+                        <button nbButton status=primary (click)="onProductUpdate()">Update</button>&nbsp;&nbsp;
+                
+                    </div>
+    </div>
+    </nb-card-body>
+</nb-card>

@@ -54,8 +54,9 @@ export class StudentsComponent implements OnInit {
       edit: false,
       delete: false,
       custom: [
-        { name: 'editRec', title: '<img src=assets/img/nb-edit.svg width=30 height=30>'},
-        { name: 'deleteRec', title: '<img src=assets/img/nb-trash.svg width=30 height=30>' }
+        { name: 'editRec', title: '<img src=assets/img/nb-edit.svg width=30 height=30>'}
+        //,
+        //{ name: 'deleteRec', title: '<img src=assets/img/nb-trash.svg width=30 height=30>' }
       ],
       position: 'right'
     },
@@ -99,6 +100,9 @@ export class StudentsComponent implements OnInit {
   }
 
   addUser(){
+
+     
+
     if(this.selectedClass.length==0 || this.selectedSystems.length==0 || this.selectedSubjects.length==0){
       this.addError="Please select systems, classes and subjects for students";
       return;
@@ -107,6 +111,15 @@ export class StudentsComponent implements OnInit {
       this.addError="Display Name, email and mobile fields are required";
       return;
     }
+
+    var mobileNumberFormat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if(!this.mobile.match(mobileNumberFormat))
+    {
+     
+      this.addError="mobile number format doesn't match";
+      return;
+    }
+
     this.loading=true;
     var stu=new User();
     stu['email']=this.email;

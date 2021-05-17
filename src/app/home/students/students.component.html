@@ -47,7 +47,7 @@
                 </nb-card>
             </div><br>
             <div style="width:100%;">
-                <div *ngIf="addError">{{addError}}</div><br>
+                <div class="invalid-feedback" *ngIf="addError" >{{addError}}</div><br>
                 <input nbInput style="margin:20px;" status=info name=disName placeholder="Display Name" [(ngModel)]=disName required>
                 <input nbInput style="margin:20px;" status=info name=email placeholder="Email" [(ngModel)]=email required>
                 <input nbInput style="margin:20px;" status=info name=mobile placeholder="Mobile" [(ngModel)]=mobile required>

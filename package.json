@@ -29,6 +29,7 @@
     "ng-recaptcha": "^6.0.2",
     "ng2-smart-table": "^1.6.0",
     "ngx-chronometer": "0.0.8",
+    "node-ccavenue": "^1.0.5",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

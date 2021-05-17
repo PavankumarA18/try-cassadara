@@ -1,0 +1,335 @@
+
+
+
+<nb-card [nbSpinner]=loading status=basic size=mediumng>
+
+    <nb-card-header>
+        Create Products
+    </nb-card-header>
+    <nb-card-body>
+        <nb-stepper #stepper [linear]=true>
+            <nb-step [stepControl]="productInfoForm" label="Product Info">
+            <form #productInfoForm="ngForm" class="step-container">
+                <div class="input-group">
+                  <input type="text" style="margin:10px;"
+                         placeholder="Enter Product name"
+                         class="form-control"
+                         name="productTitle"
+                         required
+                         nbInput
+                         [(ngModel)] = "newProduct.productTitle"
+                         #name="ngModel"
+                         [status]="name.invalid ? 'danger' : 'basic'">
+                  <textarea fullWidth style="margin:10px; height:80px"
+                         placeholder="Enter Product Description"
+                         class="form-control"
+                         name="productDesc"
+                         required
+                         nbInput
+                         [(ngModel)] = "newProduct.productDesc"
+                         #desc="ngModel"
+                         [status]="desc.invalid ? 'danger' : 'basic'"></textarea>
+
+                            <input type="text"  style="margin:10px;"
+                            placeholder="Product version"
+                            class="form-control"
+                            name="productVersion"
+                            required
+                            nbInput
+                            [(ngModel)] = "newProduct.productVersion"
+                            #inst="ngModel"
+                            [status]="inst.invalid ? 'danger' : 'basic'"><br>
+                           
+                       
+                        <div id=imageDiv style="margin:10px; width:100%; height:80px;">
+                            <div ngclass="info">File size should not exceed 40k</div>
+                            <div style="float:left;">
+                                <input nbInput
+                                 #fileInput 
+                                type="file" 
+                                accept=".jpg,.png, .jpeg, .gif"
+                                 class="form-control" (change)="onFileChange($event)" >
+                                
+                                 <div *ngIf="isFileSize && !isFileLarge" ngclass="success">
+                                    File selected successfully
+                               </div> 
+                               
+                               <div *ngIf="!isFileSize && isFileLarge" ngclass="alert alert-danger">
+                                File size is more/Only jpg/jpeg and png files are allowed!
+                                </div>
+                            </div>
+                            
+                            <div style="float:left;">
+                                &nbsp;&nbsp;&nbsp;
+                              <button nbButton  [disabled] ="!isFileSize" class="btn btn-success"(click)="fileSubmit()">Upload</button>
+                            </div>
+                            <div id=imageDiv style="margin:10px; width:100%; height:100px; float:left;" >
+                             <img style="float:left; width:auto; height:100px;" [src]=productImageUrl ><br>
+                            </div>
+                        </div>
+                        <br>
+                       
+                </div><br>
+                <br>
+                <br>
+                <div style="float:left;">
+                <button nbButton nbStepperNext (click)=onProductForm()>next</button>
+            </div>
+              </form>
+            </nb-step>
+
+            <nb-step [stepControl]="authorForm" label="Author Information">
+                <form #authorForm="ngForm" class="step-container">
+
+
+                    <div class="input-group">
+                        <input type="text" style="margin:10px;"
+                               placeholder="Enter Author name"
+                               class="form-control"
+                               name="authorName"
+                               required
+                               nbInput
+                               [(ngModel)] = "newProduct.authorName"
+                               #authorName="ngModel"
+                               [status]="authorName.invalid ? 'danger' : 'basic'">
+                        
+                        <textarea fullWidth style="margin:10px; height:150px"
+                               placeholder="Author Detail"
+                               class="form-control"
+                               name="productVersion"
+                               required
+                               nbInput
+                               [(ngModel)] = "newProduct.authorDetail"
+                               #authorDetail="ngModel"
+                               [status]="authorDetail.invalid ? 'danger' : 'basic'"></textarea>
+                      </div><br>
+                        <button nbButton nbStepperNext  (click)=onAuthorForm()>next</button>
+                    
+                </form>
+
+            </nb-step>
+
+            <nb-step [stepControl]="productContentForm" label="Product Content">
+                <form #productContentForm="ngForm" class="step-container">
+                    <div *ngIf=error2>
+                        <span>{{error2msg}}</span>
+                      </div>
+                        <div style="width:100%; height:auto;">
+                      <div style="height:50px;float:left;margin:10px;">
+                          <nb-select placeholder="System" status="info" name="system" [(ngModel)]="selectedSystem">
+                              <nb-option value={{userSettings.eduSystem.indexOf(sys)}} *ngFor="let sys of userSettings.eduSystem">{{sys}}</nb-option>
+                          </nb-select>
+                          </div>
+                          <div style="height:50px;float:left;margin:10px;">
+                          <nb-select placeholder="Class" status="info" name="class" [(ngModel)]="selectedClass">
+                              <nb-option value={{userSettings.grade.indexOf(cls)}} *ngFor="let cls of userSettings.grade">{{cls}}</nb-option>
+                          </nb-select>
+                          </div>
+                          <div style="height:50px;float:left;margin:10px;">
+                          <nb-select placeholder="Subject" status="info" name="subject" [(ngModel)]="selectedSubject">
+                              <nb-option value={{userSettings.subject.indexOf(sub)}} *ngFor="let sub of userSettings.subject">{{sub}}</nb-option>
+                          </nb-select>
+                          </div>
+                          <div style="height:50px;float:left;margin:10px;">
+                          <button nbButton status="primary" (click)="onGo();">
+                              Go
+                          </button>
+                          </div>
+                         
+                      </div> <br>
+                      <div style="width:100%;float:left;" *ngIf="canDisplayradio === true && !uniqChapters?.length">
+                        <span>{{error3msg}}</span>
+                      </div>
+                      <div style="width:100%;float:left;" *ngIf="canDisplayradio === true && uniqChapters?.length">
+                      
+                        <nb-radio-group  class="radio-group" name=setTypes required [(ngModel)]="setType" #setTypes="ngModel" [status]="setTypes.invalid? 'danger': 'basic'" >
+                            <nb-radio value="All" (click)="onClickAllradio($event)">All Chapters</nb-radio>
+                            <nb-radio value="ChapterWise" (click)="onClickChapterradio($event)">Select Chapters</nb-radio>
+                        </nb-radio-group>
+                        <div style="width:100%;float:left;" *ngIf="setType === 'ChapterWise'">
+                            <h6>Available Chapters</h6>
+                        <nb-list>
+                          <nb-list-item *ngFor="let chapter of uniqChapters">
+                              <input type="checkbox" name={{chapter}} value={{chapter}} (click)="onClickChapters($event)"> &nbsp; {{chapter}}
+                          </nb-list-item>
+                      </nb-list>
+                      </div>
+                      </div>
+                      
+                      <br><br>
+                      <div style="width:100%;float:left;">
+                          <button nbButton nbStepperNext [disabled]="error2 || error21 || !uniqChapters?.length " (click)=onProductContentForm()>next</button>
+                      </div>
+                </form>
+
+            </nb-step>
+            
+                <nb-step [stepControl]="pricingForm" label="Pricing Content">
+                    <form #pricingForm="ngForm" class="step-container">
+                        <table width=100%>
+                            <tr>
+                                <td>
+                                    <div class="input-group" style="padding:5px;" >
+                                        <label for="authorPriceLabel" style="width: 300px;">Enter the book price Rs.</label>
+                                        <input type="number" style="margin:10px;"
+                                               class="form-control"
+                                               name="authorPrice"
+                                               required
+                                               nbInput
+                                               [(ngModel)] = "newProduct.authorPrice"
+                                               #authorPrice="ngModel"
+                                               (change) = "onChangeEvent($event)"
+                                               (keyup)="onKeyUpEvent($event)"
+                                               [status]="authorPrice.invalid ? 'danger' : 'basic'"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group" style="padding:5px;">
+                                        <label for="authorDiscountLabel">Enter the author discount in %</label>
+                                        <input type="number" style="margin:10px;"
+                                        class="form-control"
+                                        name="authorDiscount"
+                                        nbInput
+                                        [(ngModel)] = "newProduct.authorDiscount"
+                                        #authorBookDiscount="ngModel"
+                                        (change) = "onauthorDiscountEvent($event)"
+                                        [status]="authorBookDiscount.invalid ? 'danger' : 'basic'">
+                            </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="input-group" style="padding:5px;">
+                                        <label for="authorFinalLabel">Final Author Price Rs.{{authorPriceAfterDiscount}}</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group" style="padding:5px;">
+                                        <label for="cassadaraMarginLabel">Cassadara Margin in %</label>
+                                        <input type="text" style="margin:10px;"
+                                        class="form-control"
+                                        name="cassadaraMargin"
+                                        disabled
+                                        nbInput
+                                        [(ngModel)] = "newProduct.cassadaraMargin"
+                                        #cassadaraMargin="ngModel"
+                                        [status]="cassadaraMargin.invalid ? 'danger' : 'basic'">
+                             </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="input-group" style="padding:5px;">
+                                        <label for="cassadaraDiscountLabel">Cassadara Discount in %</label>
+                                        <input type="number" style="margin:10px;"
+                                        class="form-control"
+                                        name="cassadaraDiscount"
+                                        nbInput
+                                        disabled
+                                        [(ngModel)] = "newProduct.cassadaraDiscount"
+                                        #cassadaraDiscount="ngModel"
+                                        (change) = "onCassadaraDiscountEvent($event)"
+                                        [status]="cassadaraDiscount.invalid ? 'danger' : 'basic'">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group" style="padding:5px;">
+                                        <label for="cassadaraFinalLabel">Price after cassadara commission & discount is Rs.{{cassadaraCommissionAfterDiscount}}</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                
+                                <td>
+                                    <div class="input-group" style="padding:5px;">
+                                        <label for="taxLabel">Tax % applied &nbsp;{{newProduct.tax}}</label>
+                                        
+                                    </div>
+                                    <div class="input-group" style="padding:5px;">
+                                        <label for="estimatedTaxLabel">Estimated Tax Rs.</label>
+                                        <input type="number" style="margin:10px;"
+                                        class="form-control"
+                                        name="estimatedTax"
+                                        disabled
+                                        nbInput
+                                        value = {{estimatedTax}}
+                                        >
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group" style="padding:5px;">
+                                        <label for="listingPriceLabel">Listing Price Rs.</label>
+                                        <input type="number" style="margin:10px;"
+                                        class="form-control"
+                                        name="listingPrice"
+                                        disabled
+                                        nbInput
+                                        [(ngModel)] = "newProduct.listingPrice"
+                                        #listingPrice="ngModel"
+                                        [status]="listingPrice.invalid ? 'danger' : 'basic'">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="input-group" style="padding:5px;">
+                                        <label for="canPublishLabel">Can Publish?</label>
+                                    <input type="checkbox" style='margin: 20px;' name="Can publish" value={{newProduct.canPublish}} (click)="onClickPublish($event)"> 
+                                </div>
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                        </table>
+                    
+                        <div style="height:50px;float:left;margin:10px;" >
+                    <button nbButton nbStepperNext [disabled] ="!newProduct.authorPrice"  (click)=createProduct()>next</button>
+                </div>
+                    </form>
+            </nb-step>
+            <nb-step [hidden]="true">
+                <div class="step-container">
+                  <h3>Product Created Successfully!</h3>
+                  <button nbButton (click)="stepper.reset()">Create More</button>
+                </div>
+              </nb-step>
+        </nb-stepper>
+
+    </nb-card-body>
+    </nb-card>
+
+<nb-card accent='info' status=basic>
+  <nb-card-header>
+    Manage Products
+  </nb-card-header>
+  <nb-card-body>
+    <div style="width:100%; height:auto;">
+      <div style="height:50px;float:left;margin:10px;">
+          <nb-select placeholder="System" status="info" name="system" [(ngModel)]="selectedSystem1">
+              <nb-option value={{userSettings.eduSystem.indexOf(sys)}} *ngFor="let sys of userSettings.eduSystem">{{sys}}</nb-option>
+          </nb-select>
+          </div>
+          <div style="height:50px;float:left;margin:10px;">
+          <nb-select placeholder="Class" status="info" name="class" [(ngModel)]="selectedClass1">
+              <nb-option value={{userSettings.grade.indexOf(cls)}} *ngFor="let cls of userSettings.grade">{{cls}}</nb-option>
+          </nb-select>
+          </div>
+          <div style="height:50px;float:left;margin:10px;">
+          <nb-select placeholder="Subject" status="info" name="subject" [(ngModel)]="selectedSubject1">
+              <nb-option value={{userSettings.subject.indexOf(sub)}} *ngFor="let sub of userSettings.subject">{{sub}}</nb-option>
+          </nb-select>
+          </div>
+          <div style="height:50px;float:left;margin:10px;">
+            <button nbButton status="primary" (click)="getProducts();">
+                Find Products
+            </button>
+            </div>
+            <ng2-smart-table [settings]="settings" [source]="source" #table   (custom)="onCustomAction($event)"></ng2-smart-table>
+    </div><br>
+    </nb-card-body>
+</nb-card>
+
+
+

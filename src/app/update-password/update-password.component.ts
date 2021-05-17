@@ -20,6 +20,7 @@ export class UpdatePasswordComponent implements OnInit {
     this.email = this.route.snapshot.params.email;
     this.password="";
     this.confirmPassword="";
+    this.message ="";
     console.log('got email '+this.email);
   }
 
@@ -40,7 +41,7 @@ export class UpdatePasswordComponent implements OnInit {
         }
       )
     }else{
-      this.message='password and confirm password does not match';
+      this.message='Password and confirm password does not match';
       return;
     }
   }

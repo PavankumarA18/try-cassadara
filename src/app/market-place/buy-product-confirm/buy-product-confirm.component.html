@@ -1,0 +1,28 @@
+<nb-card>
+    <nb-card-header>Product Information</nb-card-header>
+    <nb-card-body>
+        <div style="width:600px; height:auto;">
+        <label for="productTitleLabel" >Product Title</label>
+        <input type=text readonly nbInput fullWidth [(ngModel)]="productRecord.productTitle"  ><br><br>
+        <label for="productDescriptionLabel" >Author Name</label>
+        <input type=text readonly nbInput fullWidth [(ngModel)]="productRecord.authorName"  > <br><br>
+        <label for="authorDescriptionLabel" >Billing price</label>
+        <input type=text readonly nbInput fullWidth [(ngModel)]="productRecord.listingPrice"  ><br><br>
+        
+        <div id=imageDiv style="margin:10px; width:100%; height:100px; float:left;" >
+            <img style="float:left; width:auto; height:100px;" [src]=productRecord.productImg ><br>
+           </div>
+            
+            <br><br><br>
+            <label for="billingAddress" >Billing Address*</label>
+            <textarea  style="width:600px;" rows=4  placeholder="Enter Billing Address" name = "billingAddress" ngRequired [(ngModel)]="billingAddress">{{billingAddress}}</textarea> <br><br>
+        
+                   <br><br><br>
+                      <div style="float:right">
+                        <button nbButton [disabled]="!billingAddress" status =primary (click)="onBuyProduct()">Ok</button>&nbsp;&nbsp;
+                        &nbsp;&nbsp;
+                        <button nbButton  class="btn btn-primary" type="submit" (click)="close(null)">Cancel</button>
+                    </div>
+    </div>
+    </nb-card-body>
+</nb-card>

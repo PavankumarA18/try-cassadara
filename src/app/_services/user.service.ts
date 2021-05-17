@@ -6,6 +6,7 @@ import {ApiResponse } from '../_models/response';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 import { Test } from '../_models/Test';
+import {Product} from '../_models/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -85,4 +86,23 @@ export class UserService {
   getProducts(sys: any){
     return this.http.post<Message>('https://p3wy4gu820.execute-api.us-east-2.amazonaws.com/stage1', sys);
   }
+  
+  createProducts (product: Product){
+    return this.http.post<Message>('https://wlziiwfwv6.execute-api.us-east-2.amazonaws.com/stage1',product);
+  }
+
+  createOrder(orderDetails: any)
+  { 
+    
+    return this.http.post<Message>('https://bm5iswymc7.execute-api.us-east-2.amazonaws.com/stage1', orderDetails);
+    
+  }
+  
+  getUserProducts(products: any){
+    return this.http.post<Message>('https://dpd7z7jvsh.execute-api.us-east-2.amazonaws.com/stage1/',products);
+  }
+
+ 
+
+  
 }

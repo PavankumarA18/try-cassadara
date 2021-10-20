@@ -18,6 +18,7 @@ submitStudent: User;
 addError: string;
 stuSettings: UserSetting[];
 myStuSettings: UserSetting;
+student: any;
 
   constructor(
     private authService: AuthenticationService,
@@ -34,7 +35,21 @@ myStuSettings: UserSetting;
     this.addCheck(this.userSettings.grade, this.myStuSettings.grade);
     this.addCheck(this.userSettings.subject, this.myStuSettings.subject);
 
-   
+    //added to validate duplicate email and mobile number
+    this.student=[];
+    var teacher={};
+    teacher['email']=new Array();
+    teacher['email'].push(this.authService.currentUserValue.email);
+    this.userService.getStudents(teacher).pipe(first()).subscribe(
+      data => {
+        if(data.statusCode ==200){
+          this.student=JSON.parse(data.message);
+       }
+      },
+      err => {
+
+      }
+    )
     
   }
 
@@ -108,15 +123,26 @@ myStuSettings: UserSetting;
       this.addError="mobile number format doesn't match";
       return;
     }
+    //Check if the mobile number already used
+    if(this.student[this.student.findIndex(v => v.mobile === this.submitStudent.mobile && v.email !==this.submitStudent.email)])
+    {  
+      this.addError="mobile number already exists";
+      return;
+    }
 
-
+    
 
 
     //---------------------
     this.loading=true;
     this.submitStudent['modTeacher']=this.authService.currentUserValue.email;
     this.submitStudent['isNew']=false;
+    //bug fix july 8th 2021
+    this.submitStudent['userSettings']=new Array();
+    this.submitStudent['userSettings'].push(this.myStuSettings);
+
     console.log(JSON.stringify(this.submitStudent));
+    alert (JSON.stringify(this.myStuSettings));
     this.userService.register(this.submitStudent).pipe(first()).subscribe(
       data=>{
         if(data.statusCode == 200){

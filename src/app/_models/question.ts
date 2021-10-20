@@ -3,6 +3,7 @@ import { DatatableRowDetailTemplateDirective } from '@swimlane/ngx-datatable';
 export class Question {
     email: string;
     questionId: number;
+    questionType: string;
     edusystem: string;
     grade: string;
     subject: string;

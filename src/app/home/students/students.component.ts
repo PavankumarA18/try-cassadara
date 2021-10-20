@@ -17,6 +17,7 @@ export class StudentsComponent implements OnInit {
 
   loading=false;
   addError: string;
+  addSuccess: string;
   createError: string;
   userSettings: UserSetting;
   selectedSystems: string[];
@@ -67,11 +68,16 @@ export class StudentsComponent implements OnInit {
   };
 
   constructor(
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
+    
     private userService: UserService,
     private nbDialogService: NbDialogService) { }
 
   ngOnInit(): void {
+
+    
+
+
     if(this.authService.currentUserValue.userSettings)
       this.userSettings= this.authService.currentUserValue.userSettings.find(x => x.teacher === 'self');
     
@@ -102,7 +108,7 @@ export class StudentsComponent implements OnInit {
   addUser(){
 
      
-
+    this.addSuccess ="";
     if(this.selectedClass.length==0 || this.selectedSystems.length==0 || this.selectedSubjects.length==0){
       this.addError="Please select systems, classes and subjects for students";
       return;
@@ -116,7 +122,28 @@ export class StudentsComponent implements OnInit {
     if(!this.mobile.match(mobileNumberFormat))
     {
      
-      this.addError="mobile number format doesn't match";
+      this.addError="Incorrect mobile number format";
+      return;
+    }
+
+    var emailFormat = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+    if(!this.email.match(emailFormat))
+    {
+     
+      this.addError="Incorrect email format";
+      return;
+    }
+
+
+    if(this.student[this.student.findIndex(v => v.mobile === this.mobile)])
+    {     
+      this.addError="mobile number already exists";
+      return;
+    }
+
+    if(this.student[this.student.findIndex(v => v.email === this.email)])
+    {     
+      this.addError="Email already exists";
       return;
     }
 
@@ -146,13 +173,15 @@ export class StudentsComponent implements OnInit {
             this.student.push(stu);
             this.source=new LocalDataSource(this.student);
             this.disName=this.mobile=this.email="";
+            this.addSuccess = "Student added successfully"
             this.addError=null;
+            
           }else {
-            this.createError = data.message;
+            this.addError = data.message;
           }
         },
         error =>{
-            this.createError = error;
+            this.addError = error;
         }
     )
     
@@ -199,6 +228,7 @@ export class StudentsComponent implements OnInit {
         }).onClose.subscribe(
           data =>{
             if(data){
+              //alert (JSON.stringify(data));
               this.student[this.student.findIndex(v => v.userId === data.userId)]=data;
               this.source=new LocalDataSource(this.student);
             }

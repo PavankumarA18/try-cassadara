@@ -31,14 +31,20 @@ export class SelectStudentComponent implements OnInit {
       data=>{
         if(data.statusCode==200){
           var students=JSON.parse(data.message);
-          console.log(students);
+          console.log("Students: "+students);
+          console.log("No of students: "+students.length)
          for (var i=0;i<students.length;i++){
             var settings=students[i].userSettings;
+            console.log("Settings: "+settings);
+            console.log("Students[i]: "+students[i]);
+           
             for(var j=0;j<settings.length;j++){
+              console.log("Settings[j]: "+settings[j]);
               if(settings[j].teacher === this.authService.currentUserValue.email){
                 if(settings[j].eduSystem.includes(this.newTest.eduSystem) && 
                       settings[j].grade.includes(this.newTest.grade) && 
-                        settings[j].subject.includes(this.newTest.subject)){
+                        settings[j].subject.includes(this.newTest.subject))
+                        {
                           this.subStudents.push(students[i]);
                         }
               }

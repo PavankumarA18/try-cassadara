@@ -14,6 +14,7 @@ export class UpdatePasswordComponent implements OnInit {
   password:string;
   confirmPassword:string;
   message:string;
+  successMessage: string;
   constructor(private route: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit(): void{
@@ -21,10 +22,20 @@ export class UpdatePasswordComponent implements OnInit {
     this.password="";
     this.confirmPassword="";
     this.message ="";
+    this.successMessage="";
     console.log('got email '+this.email);
   }
 
   onUpdatePwd(){
+
+    var pwdLength = 6;
+    if(this.password.length < pwdLength)
+    {
+     
+      this.message="Password should be at least 6 characters long";
+      return;
+    }
+
     if(this.password === this.confirmPassword){
       var obj={};
       obj['email']=this.email;
@@ -32,7 +43,8 @@ export class UpdatePasswordComponent implements OnInit {
       this.userService.updatePwd(obj).pipe(first()).subscribe(
         data=>{
           if(data.statusCode == 200){
-            this.message=data.message;
+            this.successMessage=data.message;
+            this.message ="";
             this.password=this.confirmPassword="";
           }else{
             this.message=data.message;

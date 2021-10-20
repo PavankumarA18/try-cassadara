@@ -50,7 +50,7 @@
             <div style="width:650px; height:auto;">
                 <nb-card>
                     <nb-card-body>
-                        <div class="invalid-feedback" *ngIf="addError" >{{addError}}</div><br>
+                        <div class="alert-error" *ngIf="addError" >{{addError}}</div><br>
                         <input nbInput fullWidth status=info name=disName placeholder="Display Name" [(ngModel)]=submitStudent.displayName required><br><br>
                         <input nbInput fullWidth status=info name=email placeholder="Email" [(ngModel)]=submitStudent.email disabled><br><br>
                         <input nbInput fullWidth status=info name=mobile placeholder="Mobile" [(ngModel)]=submitStudent.mobile required><br><br>

@@ -1,16 +1,27 @@
 <nb-card class=dialog [nbSpinner]="loading">
-    <nb-card-header>Create Question</nb-card-header>
+    <nb-card-header>Create Question </nb-card-header>
     <nb-card-body>
     
-        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+        <div *ngIf="error" class="alert-error">{{error}}</div>
         <input nbInput #autoInput fullWidth type="text" [(ngModel)]="chapter" placeholder="Chapter Name" [nbAutocomplete]=auto>
         <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
             <nb-option *ngFor="let option of uniqChapters" [value]="option">
               {{ option }}
             </nb-option>
         </nb-autocomplete><br><br>
+
         <input type=checkbox [(ngModel)]=isMath>Is Math? &nbsp;
         <input type=checkbox [(ngModel)]=hasImg>Has Image?  <br><br>  
+       
+        <b>Question Type:</b> &nbsp;&nbsp;
+         
+        <nb-radio-group name="questionType" required  [(ngModel)]="valueRadio" (ngModelChange)="changedValue()" >
+            <nb-radio [checked]="true" value="isRadio"  >Radio</nb-radio>
+            <nb-radio value="isCheckbox"  >Checkbox</nb-radio>
+            <nb-radio value="isFillin"  >FillIn</nb-radio>
+        </nb-radio-group> <br><br>
+
+
         <textarea style="width:100%;" rows=5 [(ngModel)]="question" placeholder="Question" (ngModelChange)="doSomething($event)"></textarea><br><br>
         <div id="mathTextDiv" style="width:100%; height:100px; background:blanchedalmond;" [hidden]=!isMath>
             <mathjax [content]='question' class="box"></mathjax>
@@ -23,14 +34,16 @@
               <div style="float:left;">
               <button nbButton class="btn btn-success"(click)="fileSubmit()">Upload</button>
               </div>
-              
-              
+                       
         </div>
         <div id=imageDiv style="width:100%; height:200px; align-content: center;" [hidden]=!hasImg>
             <img style="float:left; width:200px; height:auto;" [src]=retImageUrl [hidden]=!hasImg>
 
         </div><br><br>
-        <input nbInput fullWidth type="text" [(ngModel)]="a" placeholder="Option A"><br><br>
+
+
+        <div *ngIf="valueRadio === 'isRadio'|| valueRadio === 'isCheckbox'">
+        <input nbInput fullWidth type="text" [(ngModel)]="a"  placeholder="Option A"><br><br>
         <div id="mathTextDiva" style="width:100%; height:100px; background:blanchedalmond;" [hidden]=!isMath>
             <mathjax [content]='a' class="box"></mathjax>
         </div><br><br>
@@ -46,10 +59,28 @@
         <div id="mathTextDivd" style="width:100%; height:100px; background:blanchedalmond;" [hidden]=!isMath>
             <mathjax [content]='d' class="box"></mathjax>
         </div><br><br>
+</div>
+
+<div *ngIf="valueRadio === 'isRadio' ">
         Choose the correct option<br>
         <nb-select fullWidth bindLabel="option" placeholder="Correct Answer" [(ngModel)]="selectedChoice">
             <nb-option value= "{{choices.indexOf(opt)}}" *ngFor="let opt of choices">{{opt}}</nb-option>
         </nb-select><br><br>
+    </div>
+
+    <div *ngIf="valueRadio === 'isCheckbox' ">
+        Enter the correct options (multiple options separated by commas)<br>
+        <input nbInput fullWidth name=Ans placeholder="Enter the options" [(ngModel)]="selectedAnswer" required>
+        <br><br>
+    </div>
+
+    <div *ngIf="valueRadio === 'isFillin'">
+        Enter the correct answer (multiple answers separated by commas)<br>
+        <input nbInput fullWidth name=Ans placeholder="Enter the answer" [(ngModel)]="selectedAnswer" required>
+        <br><br>
+    </div>
+
+
         **Change Mark according to the nature of the question. Mark will also determine <br>
          &nbsp;&nbsp; the time of question. 1 = 60 sec, 0.5=30 sec, 2=120 sec etc.<br>
         <input nbInput fullWidth class="control-basic" type="text" [(ngModel)]="mark" placeholder="Mark"><br><br>
@@ -61,6 +92,6 @@
             
             Close
         </button>
-        <div *ngIf="error" class="alert alert-success mt-3 mb-0">{{success}}</div>
+        <div *ngIf="error" class="alert-success">{{success}}</div>
     </nb-card-body>
 </nb-card>

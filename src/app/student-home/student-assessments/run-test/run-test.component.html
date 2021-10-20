@@ -21,7 +21,8 @@
                 <img style="float:left; width:400px; height:auto;" [src]="curQn.image" [hidden]=!curQn.hasImg>
     
             </div><br [hidden]=!curQn.hasImg><br [hidden]=!curQn.hasImg>
-            <div id="mathTextDiva" style="width:100%; height:auto;">
+
+            <div id="mathTextDiva" style="width:100%; height:auto;" *ngIf="curQn.questionType === 'isRadio' ">
                <nb-radio-group [(ngModel)]=selectedAns>
                 <nb-radio #radA value={{sOptA.val}}><mathjax [content]='sOptA.ans' class="box"></mathjax></nb-radio>
                 <nb-radio #radB value={{sOptB.val}}><mathjax [content]='sOptB.ans' class="box"></mathjax></nb-radio>
@@ -30,7 +31,25 @@
                 
                 </nb-radio-group>
 
-            </div><br><br>
+            </div>
+            <div id="mathTextDiva" style="width:100%; height:auto;" *ngIf="curQn.questionType === 'isCheckbox' ">
+
+                <nb-checkbox value={{sOptA.val}}><mathjax [content]='sOptA.ans' class="box"></mathjax></nb-checkbox>
+                <nb-checkbox value={{sOptB.val}}><mathjax [content]='sOptB.ans' class="box"></mathjax></nb-checkbox>
+                <nb-checkbox value={{sOptC.val}}><mathjax [content]='sOptC.ans' class="box"></mathjax></nb-checkbox>
+                <nb-checkbox value={{sOptD.val}}><mathjax [content]='sOptD.ans' class="box"></mathjax></nb-checkbox>
+
+        </div>
+
+        <div id="mathTextDiva" style="width:100%; height:auto;" *ngIf="curQn.questionType === 'isFillin' ">
+
+        <textarea fullWidth style="margin:10px; height:150px"
+        placeholder="Enter multiple answers separated by commas"
+        
+        [(ngModel)]=selectedAns></textarea>
+
+        </div>
+            <br><br>
             <div *ngIf=isComplete>
                 <hr>
                 <b>Score: {{finalScore}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time Taken:{{timeTaken}}</b> 

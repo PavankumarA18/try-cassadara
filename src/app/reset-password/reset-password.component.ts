@@ -11,6 +11,7 @@ export class ResetPasswordComponent implements OnInit {
 
   email:string;
   message: string;
+  errorMessage: string;
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -20,13 +21,23 @@ export class ResetPasswordComponent implements OnInit {
   onForgot(){
     var obj={};
     if(this.email === "") return;
+    var emailFormat = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+    if(!this.email.match(emailFormat))
+    {
+     
+      this.errorMessage="Incorrect email format";
+      return;
+    }
+
     obj['email']=this.email;
     this.userService.gentempPwd(obj).pipe(first()).subscribe(
       data=>{
         if(data.statusCode == 200){
+          this.errorMessage="";
           this.message=data.message;
+          this.email="";
         }else {
-          this.message=data.message;
+          this.errorMessage=data.message;
         }
       }
     )

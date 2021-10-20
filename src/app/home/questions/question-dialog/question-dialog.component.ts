@@ -20,6 +20,9 @@ export class QuestionDialogComponent implements OnInit {
   isAddNew= false;
   isMath=false;
   hasImg=false;
+  isRadio=false;
+  isCheckbox=false;
+  isFillin=false;
   toFile: any;
   retImageUrl: string;
   mathText="";
@@ -33,6 +36,7 @@ export class QuestionDialogComponent implements OnInit {
   options: string[];
   choices: string[];
   selectedChoice: string;
+  selectedAnswer:string;
   mark: number;
   chapter: string;
   question:string;
@@ -42,11 +46,13 @@ export class QuestionDialogComponent implements OnInit {
     d:string;
     correct: string;
   addedQuestions: Question[];
+  valueRadio="isRadio";
 
   constructor(private userService: UserService, protected dialogRef: NbDialogRef<any>) { }
 
   ngOnInit(): void {
     this.choices=['a','b','c','d'];
+
     
     if(this.isAddNew){
       this.chapter="";
@@ -65,6 +71,7 @@ export class QuestionDialogComponent implements OnInit {
     
     this.filteredChapters=of(this.uniqChapters);
     this.addedQuestions=[];
+   
   }
 
   private filter(value: string): string[] {
@@ -85,7 +92,7 @@ export class QuestionDialogComponent implements OnInit {
   onSelectionChange($event) {
     this.filteredChapters = this.getFilteredOptions($event);
   }
-  onSubmit(){
+  onSubmit(){ 
     this.submitted = true;
       this.loading=true;
       this.success="uploading...";
@@ -95,6 +102,7 @@ export class QuestionDialogComponent implements OnInit {
         this.submitQuestion.edusystem=this.selectedSystem;
         this.submitQuestion.grade=this.selectedClass;
         this.submitQuestion.subject=this.selectedSubject;
+        this.submitQuestion.questionType =this.valueRadio;
       }
             
       if(this.chapter == "" ){
@@ -113,6 +121,12 @@ export class QuestionDialogComponent implements OnInit {
       }
       this.submitQuestion.question=this.question;
 
+     // alert (this.submitQuestion.questionType.toString() );
+
+//this is for questionType=isRadio and questionType=isCheckbox
+if (this.submitQuestion.questionType =="isRadio" || this.submitQuestion.questionType =="isCheckbox")
+
+{
       if(this.a == "" || this.b == "" || this.c == "" || this.d ==""){
         this.error="One of the provided options may be empty";
         this.success="";
@@ -123,7 +137,12 @@ export class QuestionDialogComponent implements OnInit {
       this.submitQuestion.b=this.b;
       this.submitQuestion.c=this.c;
       this.submitQuestion.d=this.d;
+    }
 
+      //check this for questionType=isRadio only
+
+      if (this.submitQuestion.questionType =="isRadio")
+      {
       if(this.selectedChoice == null ){
         this.error="Choose correct answer";
         this.success="";
@@ -131,6 +150,23 @@ export class QuestionDialogComponent implements OnInit {
         return;
       }
       this.submitQuestion.correct= this.choices[this.selectedChoice];
+      
+    }
+
+      //write code for questionType= ischeckbox - get multiple answers separated by comma
+      if (this.submitQuestion.questionType =="isCheckbox" ||this.submitQuestion.questionType =="isFillin" )
+      {
+        if(this.selectedAnswer == null ){
+          this.error="Enter the correct answer";
+          this.success="";
+          this.loading=false;
+          return;
+        }
+        this.submitQuestion.correct=this.selectedAnswer;
+        
+      }
+
+      //write code questionType= isFillin - get answers separated by comma
 
       if(this.mark < 0.5 || this.mark > 4){
         this.error="Invalid marks";
@@ -152,13 +188,20 @@ export class QuestionDialogComponent implements OnInit {
             
             data =>{
               if(data.statusCode == 200){
+                
                 this.question="";
                 this.a=this.b=this.c=this.d="";
                 this.selectedChoice=null;
                 this.mark=1;
                 this.error="";
+                this.valueRadio="isRadio";
+                this.submitQuestion.correct="";
                 this.success ="Question uploaded successfully";
-              if(this.isAddNew)  this.addedQuestions.push(this.submitQuestion);
+              if(this.isAddNew)  
+              {
+                
+                this.addedQuestions.push(this.submitQuestion);
+              }
                 this.loading=false;
                if(!this.isAddNew) {
                       this.close();
@@ -183,6 +226,16 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   doSomething(event){
+  }
+
+  changedValue()
+  {
+    this.submitQuestion.questionType ="";
+    const newVal = {
+      questionType: this.valueRadio
+    };
+    this.submitQuestion.questionType = this.valueRadio
+    
   }
 
   onFileChange(event) {

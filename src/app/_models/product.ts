@@ -22,4 +22,6 @@ export class Product {
     setType: string;
     chapters: string[];
     
+    
+
 }

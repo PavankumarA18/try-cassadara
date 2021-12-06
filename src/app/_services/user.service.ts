@@ -33,6 +33,10 @@ export class UserService {
     return this.http.post<Message>('https://biukm6kae9.execute-api.us-east-2.amazonaws.com/stage1', user);
   }
 
+  registerInst(user: User){
+    return this.http.post<Message>('https://h8ly1cu8ek.execute-api.us-east-2.amazonaws.com/stage1', user);
+  }
+
   updateUserSettings(userSettings: any){
     return this.http.put<Message>('https://ripju0k2mh.execute-api.us-east-2.amazonaws.com/stage1', userSettings);
   }

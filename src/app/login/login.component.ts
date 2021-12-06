@@ -62,10 +62,13 @@ export class LoginComponent implements OnInit {
                         if(user.firstLogin){
                             this.router.navigate(['/updatepwd/'+user.email],{skipLocationChange:true});
                         }else {
+                            console.log('user role....', user.role);
                             if(user.role === 'teacher'){
                                 this.router.navigate([this.returnUrl]);
                             }else if(user.role === 'student'){
                                 this.router.navigate(['/student-home']);
+                            }else if(user.role === 'institute'){
+                                this.router.navigate(['/institute-home']);
                             }
                             
                         }

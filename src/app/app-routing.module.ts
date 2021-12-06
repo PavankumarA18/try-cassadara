@@ -19,6 +19,10 @@ import { PublishMarketPlaceComponent } from './publish-market-place/publish-mark
 import {PolicyPageComponent} from './market-place/policy-page/policy-page.component';
 import {CcAvenueRedirectComponent} from './market-place/cc-avenue-redirect/cc-avenue-redirect.component';
 
+import { RegisterInstituteComponent } from './register-institute/register-institute.component';
+import { InstituteHomeComponent } from './institute-home/institute-home.component';
+import { InstituteTeachersComponent } from './institute-home/institute-teachers/institute-teachers.component';
+import { InstituteProgressComponent } from './institute-home/institute-progress/institute-progress.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], children:[
@@ -28,13 +32,19 @@ const routes: Routes = [
     { path: 'tests', component: TestsComponent},
     { path: 'progress', component: ProgressComponent}
   ]},
-  { path: 'student-home', component: StudentHomeComponent, children:[
+  { path: 'student-home', component: StudentHomeComponent, canActivate: [AuthGuard], children:[
     { path: '', redirectTo: 'studentAssessments', pathMatch:"full"},
     { path: 'studentAssessments', component: StudentAssessmentsComponent },
     { path: 'studentScores', component: StudentScoresComponent}
   ]},
+  {path: 'institute-home', component: InstituteHomeComponent, canActivate: [AuthGuard], children:[
+    { path: '', redirectTo: 'teachers', pathMatch: "full"},
+    { path:'teachers', component: InstituteTeachersComponent  },
+    { path: 'progress', component: InstituteProgressComponent }
+  ] },
   { path: 'login', component: LoginComponent  },
   { path: 'register', component: RegisterComponent },
+  { path: 'inst-reg', component: RegisterInstituteComponent},
   { path: 'settings', component: SettingsComponent },
   { path: 'forgot', component: ResetPasswordComponent },
   { path: 'updatepwd/:email', component: UpdatePasswordComponent},

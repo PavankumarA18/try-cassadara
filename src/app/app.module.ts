@@ -45,6 +45,10 @@ import { PolicyPageComponent } from './market-place/policy-page/policy-page.comp
 import { CcAvenueRedirectComponent } from './market-place/cc-avenue-redirect/cc-avenue-redirect.component';
 import { BuyProductConfirmComponent } from './market-place/buy-product-confirm/buy-product-confirm.component';
 
+import { RegisterInstituteComponent } from './register-institute/register-institute.component';
+import { InstituteHomeComponent } from './institute-home/institute-home.component';
+import { InstituteTeachersComponent } from './institute-home/institute-teachers/institute-teachers.component';
+import { InstituteProgressComponent } from './institute-home/institute-progress/institute-progress.component';
 
 
 
@@ -81,6 +85,10 @@ import { BuyProductConfirmComponent } from './market-place/buy-product-confirm/b
     CcAvenueRedirectComponent,
     BuyProductConfirmComponent
     
+    RegisterInstituteComponent,
+    InstituteHomeComponent,
+    InstituteTeachersComponent,
+    InstituteProgressComponent
     
   ],
   imports: [
